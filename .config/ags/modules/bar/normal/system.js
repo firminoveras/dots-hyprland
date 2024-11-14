@@ -8,6 +8,7 @@ import Battery from 'resource:///com/github/Aylur/ags/service/battery.js';
 import { MaterialIcon } from '../../.commonwidgets/materialicon.js';
 import { AnimatedCircProg } from "../../.commonwidgets/cairo_circularprogress.js";
 import { WWO_CODE, WEATHER_SYMBOL, NIGHT_WEATHER_SYMBOL } from '../../.commondata/weather.js';
+import { setupCursorHover } from '../../.widgetutils/cursorhover.js';
 
 const WEATHER_CACHE_FOLDER = `${GLib.get_user_cache_dir()}/ags/weather`;
 Utils.exec(`mkdir -p ${WEATHER_CACHE_FOLDER}`);
@@ -69,14 +70,81 @@ const UtilButton = ({ name, icon, onClicked }) => Button({
     label: `${icon}`,
 })
 
+// Firmino Veras Tweaks
+
+const ConfigPowerSelection = ({
+    icon, name, desc = '',
+    options = [{ name: 'Option 1', value: 0, desc: '' }, { name: 'Option 2', value: 1, desc: '' }],
+    initIndex = 0,
+    onChange,
+    ...rest
+}) => {
+    let lastSelected = initIndex;
+    let value = options[initIndex].value;
+    const widget = Box({
+        tooltipText: desc,
+        className: 'segment-container-power',
+        // homogeneous: true,
+        children: options.map((option, id) => {
+            const selectedIcon = Revealer({
+                revealChild: id == initIndex,
+                transition: 'slide_left',
+                transitionDuration: userOptions.animations.durationSmall,
+                child: Label({ label: option.desc, })
+            });
+            return Button({
+                setup: setupCursorHover,
+                className: `segment-btn-power ${id == initIndex ? 'segment-btn-pkwer-enabled' : ''}`,
+                child: Box({
+                    hpack: 'center',
+                    className: 'spacing-h-5',
+                    children: [
+                        selectedIcon,
+                        MaterialIcon(option.name, 'norm'),
+                    ]
+                }),
+                onClicked: (self) => {
+                    value = option.value;
+                    const kids = widget.get_children();
+                    kids[lastSelected].toggleClassName('segment-btn-power-enabled', false);
+                    kids[lastSelected].get_children()[0].get_children()[0].revealChild = false;
+                    lastSelected = id;
+                    self.toggleClassName('segment-btn-power-enabled', true);
+                    selectedIcon.revealChild = true;
+                    onChange(option.value, option.name);
+                }
+            })
+        }),
+        ...rest,
+    });
+    return widget;
+}
+
+const CpuPower = () => ConfigPowerSelection({
+    hpack: 'center',
+    icon: 'casino',
+    name: 'CpuPower',
+    options: [
+        { value: 0, name: getString('eco'), desc: getString('Eco')},
+        { value: 1, name: getString('balance'), desc: getString('Balanced')},
+        { value: 2, name: getString('rocket_launch'), desc: getString('Performance')},
+    ],
+    initIndex: 1,
+    onChange: (value, name) => {
+        if(value == 0){ Utils.execAsync(`cpupower-gui pr Eco"`).catch(print) }
+        if(value == 1){ Utils.execAsync(`cpupower-gui -b`).catch(print) }
+        if(value == 2){ Utils.execAsync(`cpupower-gui pr Performance`).catch(print) }
+    },
+})
+
+
 const Utilities = () => Box({
     hpack: 'center',
     className: 'spacing-h-4',
     children: [
         UtilButton({
             name: getString('Screen snip'), icon: 'screenshot_region', onClicked: () => {
-                Utils.execAsync(`${App.configDir}/scripts/grimblast.sh copy area`)
-                    .catch(print)
+                Utils.execAsync(`${App.configDir}/scripts/grimblast.sh copy area`).catch(print)
             }
         }),
         UtilButton({
@@ -89,8 +157,16 @@ const Utilities = () => Box({
                 toggleWindowOnAllMonitors('osk');
             }
         }),
+        UtilButton({
+            name: getString('Change wallpaper'), icon: 'wallpaper', onClicked: () => {
+                Utils.execAsync(`bash -c ~/.config/ags/scripts/color_generation/switchwall.sh`).catch(print)
+            }
+        }),
+        CpuPower(),
     ]
 })
+
+// End Firmino Veras Tweaks
 
 const BarBattery = () => Box({
     className: 'spacing-h-4 bar-batt-txt',
@@ -144,7 +220,67 @@ const BatteryModule = () => Stack({
     transitionDuration: userOptions.animations.durationLarge,
     children: {
         'laptop': Box({
+            // Firmino Veras Tweaks
             className: 'spacing-h-4', children: [
+                BarGroup({
+                    child: Box({
+                        hexpand: true,
+                        hpack: 'center',
+                        className: 'spacing-h-4 txt-onSurfaceVariant',
+                        children: [
+                            MaterialIcon('device_thermostat', 'small'),
+                            Label({
+                                label: 'Carregando...',
+                            })
+                        ],
+                        setup: (self) => self.poll(900000, async (self) => {
+                            const WEATHER_CACHE_PATH = WEATHER_CACHE_FOLDER + '/wttr.in.txt';
+                            const updateWeatherForCity = (city) => execAsync(`curl https://wttr.in/${city.replace(/ /g, '%20')}?format=j1&lang=pt`)
+                                .then(output => {
+                                    const weather = JSON.parse(output);
+                                    Utils.writeFile(JSON.stringify(weather), WEATHER_CACHE_PATH).catch(print);
+                                    const weatherCode = weather.current_condition[0].weatherCode;
+                                    const weatherDesc = weather.current_condition[0].lang_pt[0].value;
+                                    const rainChance = weather.weather[0].hourly[0].chanceofrain;
+                                    const temperature = weather.current_condition[0][`temp_${userOptions.weather.preferredUnit}`];
+                                    const feelsLike = weather.current_condition[0][`FeelsLike${userOptions.weather.preferredUnit}`];
+                                    const weatherSymbol = WEATHER_SYMBOL[WWO_CODE[weatherCode]];
+                                    self.children[0].label = weatherSymbol;
+                                    self.children[1].label = ` ${weatherDesc}   ${temperature}°${userOptions.weather.preferredUnit}   ${rainChance}%`;
+                                    self.tooltipText = `Sensação térmica: ${feelsLike}°${userOptions.weather.preferredUnit}`;
+                                }).catch((err) => {
+                                    try { // Read from cache
+                                        const weather = JSON.parse(
+                                            Utils.readFile(WEATHER_CACHE_PATH)
+                                        );
+                                        const weatherCode = weather.current_condition[0].weatherCode;
+                                        const weatherDesc = weather.current_condition[0].lang_pt[0].value;
+                                        const rainChance = weather.weather[0].hourly[0].chanceofrain;
+                                        const temperature = weather.current_condition[0][`temp_${userOptions.weather.preferredUnit}`];
+                                        const feelsLike = weather.current_condition[0][`FeelsLike${userOptions.weather.preferredUnit}`];
+                                        const weatherSymbol = WEATHER_SYMBOL[WWO_CODE[weatherCode]];
+                                        self.children[0].label = weatherSymbol;
+                                    self.children[1].label = ` ${weatherDesc}   ${temperature}°${userOptions.weather.preferredUnit}   ${rainChance}%`;
+                                        self.tooltipText = `Sensação térmica: ${feelsLike}°${userOptions.weather.preferredUnit}`;
+                                    } catch (err) {
+                                        print(err);
+                                    }
+                                });
+                            if (userOptions.weather.city != '' && userOptions.weather.city != null) {
+                                updateWeatherForCity(userOptions.weather.city.replace(/ /g, '%20'));
+                            }
+                            else {
+                                Utils.execAsync('curl ipinfo.io')
+                                    .then(output => {
+                                        return JSON.parse(output)['city'].toLowerCase();
+                                    })
+                                    .then(updateWeatherForCity)
+                                    .catch(print)
+                            }
+                        }),
+                    })
+                }),
+                // End Firmino Veras Tweaks
                 BarGroup({ child: Utilities() }),
                 BarGroup({ child: BarBattery() }),
             ]

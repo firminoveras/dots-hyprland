@@ -145,7 +145,7 @@ export default () => {
             if (mpris)
                 label.label = `${trimTrackTitle(mpris.trackTitle)} • ${mpris.trackArtists.join(', ')}`;
             else
-                label.label = getString('No media');
+                label.label = getString('Sem mídia');
         }),
     })
     const musicStuff = Box({
@@ -198,10 +198,6 @@ export default () => {
                                     'bar-cpu-circprog', 'bar-cpu-txt', 'bar-cpu-icon'),
                             ]
                         }),
-                        setup: (self) => self.hook(Mpris, label => {
-                            const mpris = Mpris.getPlayer('');
-                            self.revealChild = (!mpris);
-                        }),
                     })
                 ],
             })
@@ -211,7 +207,7 @@ export default () => {
         onScrollUp: (self) => switchToRelativeWorkspace(self, -1),
         onScrollDown: (self) => switchToRelativeWorkspace(self, +1),
         child: Box({
-            className: 'spacing-h-4',
+            className: 'spacing-h-4 bar-music-main',
             children: [
                 SystemResourcesOrCustomModule(),
                 EventBox({
