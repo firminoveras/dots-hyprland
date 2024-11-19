@@ -323,7 +323,7 @@ $bar_ws_width_focus_active: 2.045rem;
     padding: 0 0.682rem;
 }
 
-.segment-btn-power{
+.segment-btn-power {
     color: $onSurface;
     background-color: $layer2;
     font-size: 9px;
@@ -331,20 +331,17 @@ $bar_ws_width_focus_active: 2.045rem;
     border-radius: 9999px;
 }
 
-.segment-btn-power:focus,
-.segment-btn-power:hover {
-    background-color: $layer2;
-}
-
 .segment-btn-power-enabled {
     background-color: $workspaceLayer3;
     color: $layer0;
 }
 
-.segment-btn-power-enabled:hover,
-.segment-btn-power-enabled:focus {
+.segment-btn-power:hover {
+    background-color: $layer2Hover;
+}
+
+.segment-btn-power-enabled:hover {
     background-color: $workspaceLayer3;
-    color: $layer0;
 }
 
 // End Firmino Veras Tweaks

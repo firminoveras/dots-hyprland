@@ -217,3 +217,51 @@ export const ConfigSpinButton = ({
     });
     return widgetContent;
 }
+
+export const ConfigPowerSelection = ({
+    icon, name, desc = '',
+    options = [{ name: 'Option 1', value: 0, desc: '' }, { name: 'Option 2', value: 1, desc: '' }],
+    initIndex = 0,
+    onChange,
+    ...rest
+}) => {
+    let lastSelected = initIndex;
+    let value = options[initIndex].value;
+    const widget = Box({
+        tooltipText: desc,
+        className: 'segment-container-power',
+        // homogeneous: true,
+        children: options.map((option, id) => {
+            const selectedIcon = Revealer({
+                revealChild: id == initIndex,
+                transition: 'slide_left',
+                transitionDuration: userOptions.animations.durationSmall,
+                child: Label({ label: option.desc, })
+            });
+            return Button({
+                setup: setupCursorHover,
+                className: `segment-btn-power ${id == initIndex ? 'segment-btn-power-enabled' : ''}`,
+                child: Box({
+                    hpack: 'center',
+                    className: 'spacing-h-5',
+                    children: [
+                        selectedIcon,
+                        MaterialIcon(option.name, 'norm'),
+                    ]
+                }),
+                onClicked: (self) => {
+                    value = option.value;
+                    const kids = widget.get_children();
+                    kids[lastSelected].toggleClassName('segment-btn-power-enabled', false);
+                    kids[lastSelected].get_children()[0].get_children()[0].revealChild = false;
+                    lastSelected = id;
+                    self.toggleClassName('segment-btn-power-enabled', true);
+                    selectedIcon.revealChild = true;
+                    onChange(option.value, option.name);
+                }
+            })
+        }),
+        ...rest,
+    });
+    return widget;
+}

@@ -9,6 +9,7 @@ import { MaterialIcon } from '../../.commonwidgets/materialicon.js';
 import { AnimatedCircProg } from "../../.commonwidgets/cairo_circularprogress.js";
 import { WWO_CODE, WEATHER_SYMBOL, NIGHT_WEATHER_SYMBOL } from '../../.commondata/weather.js';
 import { setupCursorHover } from '../../.widgetutils/cursorhover.js';
+import { ConfigPowerSelection } from '../../.commonwidgets/configwidgets.js';
 
 const WEATHER_CACHE_FOLDER = `${GLib.get_user_cache_dir()}/ags/weather`;
 Utils.exec(`mkdir -p ${WEATHER_CACHE_FOLDER}`);
@@ -70,70 +71,23 @@ const UtilButton = ({ name, icon, onClicked }) => Button({
     label: `${icon}`,
 })
 
-// Firmino Veras Tweaks
-
-const ConfigPowerSelection = ({
-    icon, name, desc = '',
-    options = [{ name: 'Option 1', value: 0, desc: '' }, { name: 'Option 2', value: 1, desc: '' }],
-    initIndex = 0,
-    onChange,
-    ...rest
-}) => {
-    let lastSelected = initIndex;
-    let value = options[initIndex].value;
-    const widget = Box({
-        tooltipText: desc,
-        className: 'segment-container-power',
-        // homogeneous: true,
-        children: options.map((option, id) => {
-            const selectedIcon = Revealer({
-                revealChild: id == initIndex,
-                transition: 'slide_left',
-                transitionDuration: userOptions.animations.durationSmall,
-                child: Label({ label: option.desc, })
-            });
-            return Button({
-                setup: setupCursorHover,
-                className: `segment-btn-power ${id == initIndex ? 'segment-btn-pkwer-enabled' : ''}`,
-                child: Box({
-                    hpack: 'center',
-                    className: 'spacing-h-5',
-                    children: [
-                        selectedIcon,
-                        MaterialIcon(option.name, 'norm'),
-                    ]
-                }),
-                onClicked: (self) => {
-                    value = option.value;
-                    const kids = widget.get_children();
-                    kids[lastSelected].toggleClassName('segment-btn-power-enabled', false);
-                    kids[lastSelected].get_children()[0].get_children()[0].revealChild = false;
-                    lastSelected = id;
-                    self.toggleClassName('segment-btn-power-enabled', true);
-                    selectedIcon.revealChild = true;
-                    onChange(option.value, option.name);
-                }
-            })
-        }),
-        ...rest,
-    });
-    return widget;
-}
 
 const CpuPower = () => ConfigPowerSelection({
     hpack: 'center',
     icon: 'casino',
     name: 'CpuPower',
     options: [
-        { value: 0, name: getString('eco'), desc: getString('Eco')},
-        { value: 1, name: getString('balance'), desc: getString('Balanced')},
-        { value: 2, name: getString('rocket_launch'), desc: getString('Performance')},
+        { value: 0, name: getString('temp_preferences_eco'), desc: getString('Eco Plus')},
+        { value: 1, name: getString('eco'), desc: getString('Eco')},
+        { value: 2, name: getString('balance'), desc: getString('Balanced')},
+        { value: 3, name: getString('rocket_launch'), desc: getString('Performance')},
     ],
-    initIndex: 1,
+    initIndex: 2,
     onChange: (value, name) => {
-        if(value == 0){ Utils.execAsync(`cpupower-gui pr Eco"`).catch(print) }
-        if(value == 1){ Utils.execAsync(`cpupower-gui -b`).catch(print) }
-        if(value == 2){ Utils.execAsync(`cpupower-gui pr Performance`).catch(print) }
+        if(value == 0){ Utils.execAsync(`cpupower-gui pr EcoPlus`).catch(print) }
+        if(value == 1){ Utils.execAsync(`cpupower-gui pr Eco`).catch(print) }
+        if(value == 2){ Utils.execAsync(`cpupower-gui pr Balanced`).catch(print) }
+        if(value == 3){ Utils.execAsync(`cpupower-gui pr Performance`).catch(print) }
     },
 })
 
@@ -240,6 +194,7 @@ const BatteryModule = () => Stack({
                                     const weather = JSON.parse(output);
                                     Utils.writeFile(JSON.stringify(weather), WEATHER_CACHE_PATH).catch(print);
                                     const weatherCode = weather.current_condition[0].weatherCode;
+                                    const city = weather.nearest_area[0].areaName[0].value + " - " + weather.nearest_area[0].region[0].value
                                     const weatherDesc = weather.current_condition[0].lang_pt[0].value;
                                     const rainChance = weather.weather[0].hourly[0].chanceofrain;
                                     const temperature = weather.current_condition[0][`temp_${userOptions.weather.preferredUnit}`];
@@ -247,21 +202,22 @@ const BatteryModule = () => Stack({
                                     const weatherSymbol = WEATHER_SYMBOL[WWO_CODE[weatherCode]];
                                     self.children[0].label = weatherSymbol;
                                     self.children[1].label = ` ${weatherDesc}   ${temperature}°${userOptions.weather.preferredUnit}   ${rainChance}%`;
-                                    self.tooltipText = `Sensação térmica: ${feelsLike}°${userOptions.weather.preferredUnit}`;
+                                    self.tooltipText = `Sensação térmica: ${feelsLike}°${userOptions.weather.preferredUnit}\n${city}`;
                                 }).catch((err) => {
                                     try { // Read from cache
                                         const weather = JSON.parse(
                                             Utils.readFile(WEATHER_CACHE_PATH)
                                         );
                                         const weatherCode = weather.current_condition[0].weatherCode;
+                                        const city = weather.nearest_area[0].areaName[0].value + " - " + weather.nearest_area[0].region[0].value
                                         const weatherDesc = weather.current_condition[0].lang_pt[0].value;
                                         const rainChance = weather.weather[0].hourly[0].chanceofrain;
                                         const temperature = weather.current_condition[0][`temp_${userOptions.weather.preferredUnit}`];
                                         const feelsLike = weather.current_condition[0][`FeelsLike${userOptions.weather.preferredUnit}`];
                                         const weatherSymbol = WEATHER_SYMBOL[WWO_CODE[weatherCode]];
                                         self.children[0].label = weatherSymbol;
-                                    self.children[1].label = ` ${weatherDesc}   ${temperature}°${userOptions.weather.preferredUnit}   ${rainChance}%`;
-                                        self.tooltipText = `Sensação térmica: ${feelsLike}°${userOptions.weather.preferredUnit}`;
+                                        self.children[1].label = ` ${weatherDesc}   ${temperature}°${userOptions.weather.preferredUnit}   ${rainChance}%`;
+                                        self.tooltipText = `Sensação térmica: ${feelsLike}°${userOptions.weather.preferredUnit}\n${city}`;
                                     } catch (err) {
                                         print(err);
                                     }
