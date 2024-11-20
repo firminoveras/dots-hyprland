@@ -50,14 +50,14 @@ const BarResource = (name, icon, command, circprogClassName = 'bar-batt-circprog
                 className: `${iconClassName}`,
                 homogeneous: true,
                 children: [
-                    MaterialIcon(icon, 'small'),
+                    Label({label : icon, className : 'bar-resource-txt'}),
                 ],
             }),
             overlays: [resourceCircProg]
         })]
     });
     const resourceLabel = Label({
-        className: `txt-smallie ${textClassName}`,
+        className: `bar-resource-label ${textClassName}`,
     });
     const widget = Button({
         onClicked: () => Utils.execAsync(['bash', '-c', `${userOptions.apps.taskManager}`]).catch(print),
@@ -70,7 +70,7 @@ const BarResource = (name, icon, command, circprogClassName = 'bar-batt-circprog
             setup: (self) => self.poll(5000, () => execAsync(['bash', '-c', command])
                 .then((output) => {
                     resourceCircProg.css = `font-size: ${Number(output)}px;`;
-                    resourceLabel.label = `${Math.round(Number(output))}%`;
+                    resourceLabel.label = `${(output)}%`;
                     widget.tooltipText = `${name}: ${Math.round(Number(output))}%`;
                 }).catch(print))
             ,
@@ -156,6 +156,12 @@ export default () => {
             trackTitle,
         ]
     })
+
+
+    const cpuTempLabel = Label({ className : 'bar-resource-label' })
+    const pchTempLabel = Label({ className : 'bar-resource-label' })
+    const ramTotalLabel = Label({ className : 'bar-resource-label' })
+
     const SystemResourcesOrCustomModule = () => {
         // Check if $XDG_CACHE_HOME/ags/user/scripts/custom-module-poll.sh exists
         if (GLib.file_test(CUSTOM_MODULE_CONTENT_SCRIPT, GLib.FileTest.EXISTS)) {
@@ -182,21 +188,46 @@ export default () => {
             });
         } else return BarGroup({
             child: Box({
-                className: 'spacing-h-10 margin-left-10 margin-right-10',
+                className: 'spacing-h-10',
                 children: [
-                    BarResource(getString('CPU Usage'), 'settings_motion_mode', `LANG=C top -bn1 | grep Cpu | sed 's/\\,/\\./g' | awk '{print $2}'`,
-                        'bar-cpu-circprog', 'bar-cpu-txt', 'bar-cpu-icon'),
-                    Label({className : 'txt-onSurfaceVariant'}),
-                    BarResource(getString('RAM Usage'), 'memory', `LANG=C free | awk '/^Mem/ {printf("%.2f\\n", ($3/$2) * 100)}'`,
-                        'bar-ram-circprog', 'bar-ram-txt', 'bar-ram-icon'),
-                    // BarResource(getString('Swap Usage'), 'swap_horiz', `LANG=C free | awk '/^Swap/ {if ($2 > 0) printf("%.2f\\n", ($3/$2) * 100); else print "0";}'`,
-                    //     'bar-swap-circprog', 'bar-swap-txt', 'bar-swap-icon'),
-                    Label({className : 'txt-onSurfaceVariant'}),
+
+                    Box({
+                        className : 'bar-resourse-box',
+                        children: [
+                            BarResource(getString('CPU Usage'), 'CPU', `LANG=C top -bn1 | grep Cpu | sed 's/\\,/\\./g' | awk '{printf("%02d\\n", $2)}'`,
+                                'bar-cpu-circprog', 'bar-cpu-txt', 'bar-cpu-icon'),
+                            Label({label : '', className : 'bar-resource-sep' }),
+                            cpuTempLabel
+                        ]
+                    }),
+
+                    Box({
+                        className : 'bar-resourse-box',
+                        children: [
+                            BarResource(getString('RAM Usage'), 'RAM', `LANG=C free | awk '/^Mem/ {printf("%02d\\n", ($3/$2) * 100)}'`,
+                                'bar-ram-circprog', 'bar-ram-txt', 'bar-ram-icon'),
+                            Label({label : '', className : 'bar-resource-sep' }),
+                            ramTotalLabel
+                        ],
+                        setup: (self) => self.poll(5000, () => execAsync(['bash', '-c', `LANG=C free | awk '/^Mem/ {printf("%.1f", ($3/1024)/1024)}'`])
+                            .then((output) => {
+                                ramTotalLabel.label = `${(output)}GB`
+                            }).catch(print))
+                    }),
+
+                    Box({
+                        className : 'bar-resourse-box',
+                        children: [
+                            BarResource(getString('PCH Temp'), 'PCH', `LANG=C df -H | grep -m 1 'nvme' | awk '/nvme/ {printf("%d", $5)}'`, 'bar-ram-circprog', 'bar-ram-txt', 'bar-ram-icon'),
+                            Label({label : '', className : 'bar-resource-sep' }),
+                            pchTempLabel
+                        ]
+                    }),
                 ],
                 setup: (self) => self.poll(5000, () => execAsync('sensors -j').then(output => {
                     const temp = JSON.parse(output);
-                    self.children[1].label = `${temp["coretemp-isa-0000"]["Package id 0"].temp1_input.toString()} ºC`;
-                    self.children[3].label = `PCH ${temp["pch_cannonlake-virtual-0"].temp1.temp1_input.toString()} ºC`;
+                    cpuTempLabel.label = `${temp["coretemp-isa-0000"]["Package id 0"].temp1_input.toString()}ºC`;
+                    pchTempLabel.label = `${temp["pch_cannonlake-virtual-0"].temp1.temp1_input.toString()}ºC`;
                 }).catch(print))
             })
         });

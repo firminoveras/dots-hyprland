@@ -448,3 +448,28 @@ $bar_ws_width_focus_active: 2.045rem;
     font-size: 1.032rem;
     padding: 0.205rem 0.341rem;
 }
+
+.bar-resourse-box {
+    background-color: $layer1;
+    border-radius: 9999px;
+    margin: 0.273rem;
+    padding: 0 0.4rem;
+}
+
+.bar-resource-txt {
+    font-family: monospace;
+    color: $onLayer3;
+    font-size: 0.702rem;
+}
+
+.bar-resource-sep {
+    color: $layer2Hover;
+    font-size: 0.702rem;
+    margin: 0 0.205rem;
+}
+
+.bar-resource-label {
+    font-family: monospace;
+    color: $onLayer3;
+    font-size: 0.800rem;
+}
