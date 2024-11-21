@@ -191,38 +191,81 @@ export default () => {
                 className: 'spacing-h-10',
                 children: [
 
-                    Box({
-                        className : 'bar-resourse-box',
-                        children: [
-                            BarResource(getString('CPU Usage'), 'CPU', `LANG=C top -bn1 | grep Cpu | sed 's/\\,/\\./g' | awk '{printf("%02d\\n", $2)}'`,
-                                'bar-cpu-circprog', 'bar-cpu-txt', 'bar-cpu-icon'),
-                            Label({label : '', className : 'bar-resource-sep' }),
-                            cpuTempLabel
-                        ]
+                    EventBox({
+                        onPrimaryClick: (self) => { self.child.children[1].revealChild = !self.child.children[1].revealChild; },
+                        child: 
+                            Box({
+                                className : 'bar-resourse-box',
+                                children: [
+                                    BarResource(getString('CPU Usage'), 'CPU', `LANG=C top -bn1 | grep Cpu | sed 's/\\,/\\./g' | awk '{printf("%02d\\n", $2)}'`,
+                                        'bar-cpu-circprog', 'bar-cpu-txt', 'bar-cpu-icon'),
+
+                                    Revealer({
+                                        revealChild: false,
+                                        transition: 'slide_left',
+                                        transitionDuration: userOptions.animations.durationLarge,
+                                        child: Box({
+                                            children: [
+                                                Label({label : '', className : 'bar-resource-sep' }),
+                                                cpuTempLabel,
+                                            ]
+                                        }),
+                                    }),
+                                ]
+                            })
                     }),
 
-                    Box({
-                        className : 'bar-resourse-box',
-                        children: [
-                            BarResource(getString('RAM Usage'), 'RAM', `LANG=C free | awk '/^Mem/ {printf("%02d\\n", ($3/$2) * 100)}'`,
-                                'bar-ram-circprog', 'bar-ram-txt', 'bar-ram-icon'),
-                            Label({label : '', className : 'bar-resource-sep' }),
-                            ramTotalLabel
-                        ],
-                        setup: (self) => self.poll(5000, () => execAsync(['bash', '-c', `LANG=C free | awk '/^Mem/ {printf("%.1f", ($3/1024)/1024)}'`])
-                            .then((output) => {
-                                ramTotalLabel.label = `${(output)}GB`
-                            }).catch(print))
+                    EventBox({
+                        onPrimaryClick: (self) => { self.child.children[1].revealChild = !self.child.children[1].revealChild; },
+                        child: 
+                            Box({
+                                className : 'bar-resourse-box',
+                                children: [
+                                    BarResource(getString('RAM Usage'), 'RAM', `LANG=C free | awk '/^Mem/ {printf("%02d\\n", ($3/$2) * 100)}'`,
+                                        'bar-ram-circprog', 'bar-ram-txt', 'bar-ram-icon'),
+
+                                    Revealer({
+                                        revealChild: false,
+                                        transition: 'slide_left',
+                                        transitionDuration: userOptions.animations.durationLarge,
+                                        child: Box({
+                                            children: [
+                                                Label({label : '', className : 'bar-resource-sep' }),
+                                                ramTotalLabel
+                                            ]
+                                        }),
+                                    }),
+                                ],
+                                setup: (self) => self.poll(5000, () => execAsync(['bash', '-c', `LANG=C free | awk '/^Mem/ {printf("%.1f", ($3/1024)/1024)}'`])
+                                    .then((output) => {
+                                        ramTotalLabel.label = `${(output)}GB`
+                                    }).catch(print))
+                            })
                     }),
 
-                    Box({
-                        className : 'bar-resourse-box',
-                        children: [
-                            BarResource(getString('PCH Temp'), 'PCH', `LANG=C df -H | grep -m 1 'nvme' | awk '/nvme/ {printf("%d", $5)}'`, 'bar-ram-circprog', 'bar-ram-txt', 'bar-ram-icon'),
-                            Label({label : '', className : 'bar-resource-sep' }),
-                            pchTempLabel
-                        ]
+                    EventBox({
+                        onPrimaryClick: (self) => { self.child.children[1].revealChild = !self.child.children[1].revealChild; },
+                        child: 
+                            Box({
+                                className : 'bar-resourse-box',
+                                children: [
+                                    BarResource(getString('PCH Temp'), 'PCH', `LANG=C df -H | grep -m 1 'nvme' | awk '/nvme/ {printf("%d", $5)}'`, 'bar-ram-circprog', 'bar-ram-txt', 'bar-ram-icon'),
+
+                                    Revealer({
+                                        revealChild: false,
+                                        transition: 'slide_left',
+                                        transitionDuration: userOptions.animations.durationLarge,
+                                        child: Box({
+                                            children: [
+                                                Label({label : '', className : 'bar-resource-sep' }),
+                                                pchTempLabel
+                                            ]
+                                        }),
+                                    }),
+                                ]
+                            }),
                     }),
+
                 ],
                 setup: (self) => self.poll(5000, () => execAsync('sensors -j').then(output => {
                     const temp = JSON.parse(output);
