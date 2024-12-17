@@ -94,16 +94,16 @@ const AudioDevices = (input = false) => {
         child: Box({
             className: 'txt spacing-h-10',
             children: [
-                MaterialIcon(input ? 'mic_external_on' : 'media_output', 'norm'),
+                MaterialIcon(input ? 'mic' : 'volume_up', 'norm'),
                 Label({
                     hexpand: true,
                     xalign: 0,
                     className: 'txt-small',
                     truncate: 'end',
                     maxWidthChars: 1,
-                    label: `${input ? '[In]' : '[Out]'}`,
+                    label: ``,
                     setup: (self) => self.hook(Audio, (self) => {
-                        self.label = `${input ? '[In]' : '[Out]'} ${input ? Audio.microphone.description : Audio.speaker.description}`;
+                        self.label = `${input ? Audio.microphone.description : Audio.speaker.description}`;
                     })
                 }),
                 Label({

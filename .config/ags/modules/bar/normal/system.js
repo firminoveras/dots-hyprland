@@ -116,10 +116,16 @@ const Utilities = () => Box({
                 Utils.execAsync(`bash -c ~/.config/ags/scripts/color_generation/switchwall.sh`).catch(print)
             }
         }),
-        CpuPower(),
     ]
 })
 
+const Power = () => Box({
+    hpack: 'center',
+    className: 'spacing-h-4',
+    children: [
+        CpuPower(),
+    ]
+})
 // End Firmino Veras Tweaks
 
 const BarBattery = () => Box({
@@ -238,6 +244,7 @@ const BatteryModule = () => Stack({
                 }),
                 // End Firmino Veras Tweaks
                 BarGroup({ child: Utilities() }),
+                BarGroup({ child: Power() }),
                 BarGroup({ child: BarBattery() }),
             ]
         }),
