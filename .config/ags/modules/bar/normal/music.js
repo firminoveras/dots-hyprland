@@ -26,6 +26,22 @@ function trimTrackTitle(title) {
     return title;
 }
 
+function adjustVolume(direction) {
+    const step = 0.03; 
+    execAsync(['playerctl', 'volume'])
+        .then((output) => {
+            let currentVolume = parseFloat(output.trim());
+            let newVolume = direction === 'up' ? currentVolume + step : currentVolume - step;
+
+            if (newVolume > 1.0) newVolume = 1.0;
+            if (newVolume < 0.0) newVolume = 0.0;
+
+            execAsync(['playerctl', 'volume', newVolume.toFixed(2)]).catch(print);
+        })
+        .catch(print);
+}
+
+
 const BarGroup = ({ child }) => Box({
     className: 'bar-group-margin bar-sides',
     children: [
@@ -104,6 +120,8 @@ const switchToRelativeWorkspace = async (self, num) => {
         execAsync([`${App.configDir}/scripts/sway/swayToRelativeWs.sh`, `${num}`]).catch(print);
     }
 }
+
+
 
 export default () => {
     // TODO: use cairo to make button bounce smaller on click, if that's possible
@@ -276,8 +294,8 @@ export default () => {
         });
     }
     return EventBox({
-        onScrollUp: (self) => switchToRelativeWorkspace(self, -1),
-        onScrollDown: (self) => switchToRelativeWorkspace(self, +1),
+        onScrollUp: () => adjustVolume('up'),
+        onScrollDown: () => adjustVolume('down'),
         child: Box({
             className: 'spacing-h-4 bar-music-main',
             children: [
@@ -296,3 +314,4 @@ export default () => {
         })
     });
 }
+
