@@ -163,7 +163,7 @@ export default () => {
             if (mpris)
                 label.label = `${trimTrackTitle(mpris.trackTitle)} • ${mpris.trackArtists.join(', ')}`;
             else
-                label.label = getString('Sem mídia');
+                label.label = getString('No media');
         }),
     })
     const musicStuff = Box({
