@@ -190,6 +190,59 @@ apply_gtk() { # Using gradience-cli
 	fi
 }
 
+apply_nchat() {
+	if ! which nchat &>/dev/null; then
+		echo "NChat is not installed. Skipping that."
+		return
+	fi
+
+	# Check if scripts/templates/nchat/color.conf exists
+	if [ ! -f "scripts/templates/nchat/color.conf" ]; then
+		echo "Template file not found for NChat. Skipping that."
+		return
+	fi
+
+	# Copy template
+	mkdir -p "$CACHE_DIR"/user/generated/nchat
+	cp "scripts/templates/nchat/color.conf" "$CACHE_DIR"/user/generated/nchat/color.conf
+
+	# Apply colors
+	for i in "${!colorlist[@]}"; do
+		sed -i "s/${colorlist[$i]} #/${colorvalues[$i]#\#}/g" "$CACHE_DIR"/user/generated/nchat/color.conf
+	done
+
+	# Udate file
+	mkdir -p "$XDG_CONFIG_HOME"/nchat
+	cp "$CACHE_DIR"/user/generated/nchat/color.conf "$XDG_CONFIG_HOME"/nchat/color.conf
+}
+
+apply_foliate() {
+	if ! which foliate &>/dev/null; then
+		echo "Foliate is not installed. Skipping that."
+		return
+	fi
+
+	# Check if scripts/templates/com.github.johnfactotum.Foliate/themes/dots.json
+	if [ ! -f "scripts/templates/foliate/dots.json" ]; then
+		echo "Template file not found for Foliate. Skipping that."
+		return
+	fi
+
+	# Copy template
+	mkdir -p "$CACHE_DIR"/user/generated/foliate
+	cp "scripts/templates/foliate/dots.json" "$CACHE_DIR"/user/generated/foliate/dots.json
+
+	# Apply colors
+	for i in "${!colorlist[@]}"; do
+		sed -i "s/${colorlist[$i]} #/${colorvalues[$i]#\#}/g" "$CACHE_DIR"/user/generated/foliate/dots.json
+	done
+
+	# Udate file
+	mkdir -p "$XDG_CONFIG_HOME"/com.github.johnfactotum.Foliate
+	mkdir -p "$XDG_CONFIG_HOME"/com.github.johnfactotum.Foliate/themes
+	cp "$CACHE_DIR"/user/generated/foliate/dots.json "$XDG_CONFIG_HOME"/com.github.johnfactotum.Foliate/themes/dots.json
+}
+
 apply_ags() {
 	ags run-js "handleStyles(false);"
 	ags run-js 'openColorScheme.value = true; Utils.timeout(2000, () => openColorScheme.value = false);'
@@ -208,4 +261,6 @@ apply_lightdark &
 apply_kitty &
 apply_gtk &
 apply_fuzzel &
+apply_nchat &
+apply_foliate &
 apply_term &

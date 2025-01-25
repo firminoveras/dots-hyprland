@@ -114,8 +114,8 @@ $bar_ws_width_focus_active: 2.045rem;
 }
 
 .bar-ws-occupied {
-    background-color: $layer0;
-    color: $workspaceOnLayer2;
+    background-color: $background;
+    color: $primary;
 }
 
 // Focus is the bar mode name, not the workspace state!

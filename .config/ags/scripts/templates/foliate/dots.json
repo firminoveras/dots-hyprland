@@ -1,0 +1,13 @@
+{
+    "label": "Dots",
+    "light": {
+        "fg": "#$onBackground #",
+        "bg": "#$background #",
+        "link": "#$primary #"
+    },
+    "dark": {
+        "fg": "#$onBackground #",
+        "bg": "#$background #",
+        "link": "#$primary #"
+    }
+}
