@@ -37,4 +37,5 @@ else
 fi
 
 # Generate colors for ags n stuff
+cp "${imgpath}" /usr/share/sddm/themes/sdt/background.jpg
 "$CONFIG_DIR"/scripts/color_generation/colorgen.sh "${imgpath}" --apply --smart

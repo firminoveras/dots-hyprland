@@ -243,6 +243,34 @@ apply_foliate() {
 	cp "$CACHE_DIR"/user/generated/foliate/dots.json "$XDG_CONFIG_HOME"/com.github.johnfactotum.Foliate/themes/dots.json
 }
 
+apply_sddm() {
+	# Copy template
+	mkdir -p "$CACHE_DIR"/user/generated/sddm
+	cp "scripts/templates/sddm/theme.conf" "$CACHE_DIR"/user/generated/sddm/theme.conf
+
+	# Apply colors
+	for i in "${!colorlist[@]}"; do
+		sed -i "s/${colorlist[$i]} #/${colorvalues[$i]#\#}/g" "$CACHE_DIR"/user/generated/sddm/theme.conf
+	done
+
+	# Udate file
+	cp "$CACHE_DIR"/user/generated/sddm/theme.conf /usr/share/sddm/themes/sdt/theme.conf
+}
+
+apply_neovim() {
+	# Copy template
+	mkdir -p "$CACHE_DIR"/user/generated/neovim
+	cp "scripts/templates/neovim/base16.lua" "$CACHE_DIR"/user/generated/neovim/base16.lua
+
+	# Apply colors
+	for i in "${!colorlist[@]}"; do
+		sed -i "s/${colorlist[$i]} #/${colorvalues[$i]#\#}/g" "$CACHE_DIR"/user/generated/neovim/base16.lua
+	done
+
+	# Udate file
+	cp "$CACHE_DIR"/user/generated/neovim/base16.lua "$XDG_CONFIG_HOME"/astronvim_v4/lua/plugins/base16.lua
+}
+
 apply_ags() {
 	ags run-js "handleStyles(false);"
 	ags run-js 'openColorScheme.value = true; Utils.timeout(2000, () => openColorScheme.value = false);'
@@ -263,4 +291,6 @@ apply_gtk &
 apply_fuzzel &
 apply_nchat &
 apply_foliate &
+apply_sddm &
+apply_neovim &
 apply_term &
