@@ -8,6 +8,7 @@ const { execAsync } = Utils;
 import Indicator from '../../../services/indicator.js';
 import { StatusIcons } from '../../.commonwidgets/statusicons.js';
 import { Tray } from "./tray.js";
+const { Box, Button } = Widget;
 
 const SeparatorDot = () => Widget.Revealer({
     transition: 'slide_left',
@@ -28,6 +29,41 @@ const SeparatorDot = () => Widget.Revealer({
         .hook(SystemTray, (self) => self.attribute.update(self, -1), 'removed')
     ,
 });
+
+const UtilButton = ({ name, icon, onClicked }) => Button({
+    vpack: 'center',
+    tooltipText: name,
+    onClicked: onClicked,
+    className: 'bar-util-btn icon-material txt-norm',
+    label: `${icon}`,
+})
+
+const Utilities = () => Box({
+    hpack: 'center',
+    className: 'spacing-h-4 bar-systray-utilities',
+    children: [
+        UtilButton({
+            name: getString('Screen snip'), icon: 'screenshot_region', onClicked: () => {
+                Utils.execAsync(`${App.configDir}/scripts/grimblast.sh copy area`).catch(print)
+            }
+        }),
+        UtilButton({
+            name: getString('Color picker'), icon: 'colorize', onClicked: () => {
+                Utils.execAsync(['hyprpicker', '-a']).catch(print)
+            }
+        }),
+        UtilButton({
+            name: getString('Toggle on-screen keyboard'), icon: 'keyboard', onClicked: () => {
+                toggleWindowOnAllMonitors('osk');
+            }
+        }),
+        UtilButton({
+            name: getString('Change wallpaper'), icon: 'wallpaper', onClicked: () => {
+                Utils.execAsync(`bash -c ~/.config/ags/scripts/color_generation/switchwall.sh`).catch(print)
+            }
+        }),
+    ]
+})
 
 export default (monitor = 0) => {
     const barTray = Tray();
@@ -63,6 +99,7 @@ export default (monitor = 0) => {
         className: 'spacing-h-5 bar-spaceright',
         children: [
             emptyArea,
+            Utilities(),
             barTray,
             indicatorArea
         ],

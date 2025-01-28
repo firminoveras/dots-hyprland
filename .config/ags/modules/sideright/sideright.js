@@ -25,6 +25,7 @@ import { getDistroIcon } from '../.miscutils/system.js';
 import { MaterialIcon } from '../.commonwidgets/materialicon.js';
 import { ExpandingIconTabContainer } from '../.commonwidgets/tabcontainer.js';
 import { checkKeybind } from '../.widgetutils/keybind.js';
+import { ConfigPowerSelection } from '../.commonwidgets/configwidgets.js';
 
 const centerWidgets = [
     {
@@ -142,6 +143,44 @@ export const sidebarOptionsStack = ExpandingIconTabContainer({
     }
 });
 
+const CpuPower = () => ConfigPowerSelection({
+    hpack: 'center',
+    icon: 'casino',
+    name: 'CpuPower',
+    options: [
+        { value: 0, name: getString('temp_preferences_eco'), desc: getString('Eco Plus')},
+        { value: 1, name: getString('eco'), desc: getString('Eco')},
+        { value: 2, name: getString('balance'), desc: getString('Balanced')},
+        { value: 3, name: getString('rocket_launch'), desc: getString('Performance')},
+    ],
+    initIndex: 2,
+    onChange: (value, name) => {
+        if(value == 0){ Utils.execAsync(`cpupower-gui pr EcoPlus`).catch(print) }
+        if(value == 1){ Utils.execAsync(`cpupower-gui pr Eco`).catch(print) }
+        if(value == 2){ Utils.execAsync(`cpupower-gui pr Balanced`).catch(print) }
+        if(value == 3){ Utils.execAsync(`cpupower-gui pr Performance`).catch(print) }
+    },
+})
+
+const BarGroup = ({ child }) => Widget.Box({
+    className: 'bar-group-margin bar-sides',
+    hpack: 'center',
+    children: [
+        Widget.Box({
+            className: 'bar-group bar-group-standalone bar-group-pad-system',
+            children: [child],
+        }),
+    ]
+});
+
+const Power = () => Box({
+    hpack: 'center',
+    className: 'spacing-h-4',
+    children: [
+        CpuPower(),
+    ]
+})
+
 export default () => Box({
     vexpand: true,
     hexpand: true,
@@ -171,6 +210,7 @@ export default () => Box({
                         sidebarOptionsStack,
                     ],
                 }),
+                BarGroup({ child: Power() }),
                 ModuleCalendar(),
             ]
         }),

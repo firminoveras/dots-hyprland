@@ -9,7 +9,6 @@ import { MaterialIcon } from '../../.commonwidgets/materialicon.js';
 import { AnimatedCircProg } from "../../.commonwidgets/cairo_circularprogress.js";
 import { WWO_CODE, WEATHER_SYMBOL, NIGHT_WEATHER_SYMBOL } from '../../.commondata/weather.js';
 import { setupCursorHover } from '../../.widgetutils/cursorhover.js';
-import { ConfigPowerSelection } from '../../.commonwidgets/configwidgets.js';
 
 const WEATHER_CACHE_FOLDER = `${GLib.get_user_cache_dir()}/ags/weather`;
 Utils.exec(`mkdir -p ${WEATHER_CACHE_FOLDER}`);
@@ -63,69 +62,6 @@ const BarClock = () => Widget.Box({
     ],
 });
 
-const UtilButton = ({ name, icon, onClicked }) => Button({
-    vpack: 'center',
-    tooltipText: name,
-    onClicked: onClicked,
-    className: 'bar-util-btn icon-material txt-norm',
-    label: `${icon}`,
-})
-
-
-const CpuPower = () => ConfigPowerSelection({
-    hpack: 'center',
-    icon: 'casino',
-    name: 'CpuPower',
-    options: [
-        { value: 0, name: getString('temp_preferences_eco'), desc: getString('Eco Plus')},
-        { value: 1, name: getString('eco'), desc: getString('Eco')},
-        { value: 2, name: getString('balance'), desc: getString('Balanced')},
-        { value: 3, name: getString('rocket_launch'), desc: getString('Performance')},
-    ],
-    initIndex: 2,
-    onChange: (value, name) => {
-        if(value == 0){ Utils.execAsync(`cpupower-gui pr EcoPlus`).catch(print) }
-        if(value == 1){ Utils.execAsync(`cpupower-gui pr Eco`).catch(print) }
-        if(value == 2){ Utils.execAsync(`cpupower-gui pr Balanced`).catch(print) }
-        if(value == 3){ Utils.execAsync(`cpupower-gui pr Performance`).catch(print) }
-    },
-})
-
-
-const Utilities = () => Box({
-    hpack: 'center',
-    className: 'spacing-h-4',
-    children: [
-        UtilButton({
-            name: getString('Screen snip'), icon: 'screenshot_region', onClicked: () => {
-                Utils.execAsync(`${App.configDir}/scripts/grimblast.sh copy area`).catch(print)
-            }
-        }),
-        UtilButton({
-            name: getString('Color picker'), icon: 'colorize', onClicked: () => {
-                Utils.execAsync(['hyprpicker', '-a']).catch(print)
-            }
-        }),
-        UtilButton({
-            name: getString('Toggle on-screen keyboard'), icon: 'keyboard', onClicked: () => {
-                toggleWindowOnAllMonitors('osk');
-            }
-        }),
-        UtilButton({
-            name: getString('Change wallpaper'), icon: 'wallpaper', onClicked: () => {
-                Utils.execAsync(`bash -c ~/.config/ags/scripts/color_generation/switchwall.sh`).catch(print)
-            }
-        }),
-    ]
-})
-
-const Power = () => Box({
-    hpack: 'center',
-    className: 'spacing-h-4',
-    children: [
-        CpuPower(),
-    ]
-})
 // End Firmino Veras Tweaks
 
 const BarBattery = () => Box({
@@ -243,8 +179,6 @@ const BatteryModule = () => Stack({
                     })
                 }),
                 // End Firmino Veras Tweaks
-                BarGroup({ child: Utilities() }),
-                BarGroup({ child: Power() }),
                 BarGroup({ child: BarBattery() }),
             ]
         }),

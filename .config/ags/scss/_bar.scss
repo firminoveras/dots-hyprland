@@ -389,6 +389,10 @@ $bar_ws_width_focus_active: 2.045rem;
     padding-right: 2.386rem;
 }
 
+.bar-systray-utilities {
+    margin: 0rem 1.032rem;
+}
+
 .bar-systray {
     @include full-rounding;
     margin: 0.137rem 0rem;
