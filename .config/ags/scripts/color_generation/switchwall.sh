@@ -22,6 +22,7 @@ switch() {
 	swww img "$imgpath" --transition-step 100 --transition-fps 120 \
 		--transition-type grow --transition-angle 30 --transition-duration 1 \
 		--transition-pos "$cursorposx, $cursorposy_inverted"
+	wal -q -s -t -e -i "$imgpath"
 }
 
 if [ "$1" == "--noswitch" ]; then

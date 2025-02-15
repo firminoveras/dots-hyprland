@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+XDG_HOME="${XDG_HOME:-$HOME}"
 XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
 XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
 CONFIG_DIR="$XDG_CONFIG_HOME/ags"
@@ -283,6 +284,22 @@ apply_neovim() {
 	cp "$CACHE_DIR"/user/generated/neovim/base16.lua "$XDG_CONFIG_HOME"/astronvim_v4/lua/plugins/base16.lua
 }
 
+apply_zen() {
+	# Copy template
+	mkdir -p "$CACHE_DIR"/user/generated/zen
+	cp "scripts/templates/zen/userChrome.css" "$CACHE_DIR"/user/generated/zen/userChrome.css
+	cp "scripts/templates/zen/userContent.css" "$CACHE_DIR"/user/generated/zen/userContent.css
+
+	# Apply colors
+	for i in "${!colorlist[@]}"; do
+		sed -i "s/${colorlist[$i]} #/${colorvalues[$i]#\#}/g" "$CACHE_DIR"/user/generated/zen/userChrome.css
+		sed -i "s/${colorlist[$i]} #/${colorvalues[$i]#\#}/g" "$CACHE_DIR"/user/generated/zen/userContent.css
+	done
+
+	# Udate file
+	cp "$CACHE_DIR"/user/generated/zen/userChrome.css "$XDG_HOME"'/.zen/fmpaicry.Default (release)/chrome/userChrome.css'
+	cp "$CACHE_DIR"/user/generated/zen/userContent.css "$XDG_HOME"'/.zen/fmpaicry.Default (release)/chrome/userContent.css'
+}
 
 colornames=$(cat $STATE_DIR/scss/_material.scss | cut -d: -f1)
 colorstrings=$(cat $STATE_DIR/scss/_material.scss | cut -d: -f2 | cut -d ' ' -f2 | cut -d ";" -f1)
@@ -303,3 +320,4 @@ apply_foliate &
 apply_sddm &
 apply_neovim &
 apply_term &
+apply_zen
