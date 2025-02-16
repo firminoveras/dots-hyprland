@@ -17,12 +17,13 @@ switch() {
 		exit 0
 	fi
 
+	wal -q -s -t -e -i "$imgpath"
+
 	# agsv1 run-js "wallpaper.set('')"
 	# sleep 0.1 && agsv1 run-js "wallpaper.set('${imgpath}')" &
 	swww img "$imgpath" --transition-step 100 --transition-fps 120 \
 		--transition-type grow --transition-angle 30 --transition-duration 1 \
 		--transition-pos "$cursorposx, $cursorposy_inverted"
-	wal -q -s -t -e -i "$imgpath"
 }
 
 if [ "$1" == "--noswitch" ]; then
