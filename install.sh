@@ -142,6 +142,7 @@ v sudo usermod -aG video,i2c,input "$(whoami)"
 v bash -c "echo i2c-dev | sudo tee /etc/modules-load.d/i2c-dev.conf"
 v systemctl --user enable ydotool --now
 v gsettings set org.gnome.desktop.interface font-name 'Rubik 7'
+v sudo systemctl enable bluetooth --now
 v gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 
 #####################################################################################
