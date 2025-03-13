@@ -50,7 +50,7 @@ const APILIST = {
         contentWidget: booruView,
         commandBar: booruCommands,
         tabIcon: booruTabIcon,
-        placeholderText: getString('Enter tags and/or page number'),
+        placeholderText: getString('Enter tags'),
     },
 }
 const APIS = userOptions.sidebar.pages.apis.order.map((apiName) => APILIST[apiName]);

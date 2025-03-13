@@ -136,7 +136,7 @@ const booruWelcome = Box({
 
 const BooruPage = (taglist, serviceName = 'Booru') => {
     const PageState = (icon, name) => Box({
-        className: 'spacing-h-5 txt margin-right-5',
+        className: 'spacing-h-5 txt',
         children: [
             Label({
                 className: 'sidebar-waifu-txt txt-smallie',
@@ -304,7 +304,6 @@ const BooruPage = (taglist, serviceName = 'Booru') => {
                 ]
             }),
             Box({
-                className: 'margin-5',
                 children: [
                     Scrollable({
                         hexpand: true,
@@ -328,38 +327,11 @@ const BooruPage = (taglist, serviceName = 'Booru') => {
         homogeneous: true,
         className: 'sidebar-booru-imagegrid',
     })
-    const pageTip = Revealer({
-        transition: 'slide_down',
-        transitionDuration: 0,
-        revealChild: false,
-        child: Box({
-            className: 'txt-subtext margin-5',
-            children: [
-                Box({
-                    homogeneous: true,
-                    className: 'sidebar-booru-tip-icon',
-                    children: [MaterialIcon('lightbulb', 'larger')]
-                }),
-                Label({
-                    label: getString("No tag in mind? Type a page number"),
-                    className: 'txt-smallie',
-                    wrap: true,
-                    xalign: 0,
-                })
-            ]
-        })
-    })
-    const pageContentRevealer = Revealer({
+    const pageImageRevealer = Revealer({
         transition: 'slide_down',
         transitionDuration: userOptions.animations.durationLarge,
         revealChild: false,
-        child: Box({
-            vertical: true,
-            children: [
-                pageImages,
-                pageTip,
-            ]
-        }),
+        child: pageImages,
     });
     const thisPage = Box({
         homogeneous: true,
@@ -367,20 +339,13 @@ const BooruPage = (taglist, serviceName = 'Booru') => {
         attribute: {
             'imagePath': '',
             'isNsfw': false,
-            'showContent': () => {
-                Utils.timeout(IMAGE_REVEAL_DELAY,
-                    () => pageContentRevealer.revealChild = true
-                );
-            },
-            'update': (data, force = false) => {
+            'update': (data, force = false) => { // TODO: Use columns. Sort min to max h/w ratio then greedily put em in...
                 // Sort by .aspect_ratio
                 data = data.sort(
                     (a, b) => a.aspect_ratio - b.aspect_ratio
                 );
                 if (data.length == 0) {
-                    pageTip.revealChild = true;
                     downloadState.shown = 'error';
-                    thisPage.attribute.showContent();
                     return;
                 }
                 const imageColumns = userOptions.sidebar.image.columns;
@@ -413,7 +378,9 @@ const BooruPage = (taglist, serviceName = 'Booru') => {
                 pageImages.show_all();
 
                 // Reveal stuff
-                thisPage.attribute.showContent();
+                Utils.timeout(IMAGE_REVEAL_DELAY,
+                    () => pageImageRevealer.revealChild = true
+                );
                 downloadIndicator.attribute.hide();
             },
         },
@@ -423,7 +390,7 @@ const BooruPage = (taglist, serviceName = 'Booru') => {
                 pageHeading,
                 Box({
                     vertical: true,
-                    children: [pageContentRevealer],
+                    children: [pageImageRevealer],
                 })
             ]
         })],
@@ -496,9 +463,8 @@ const booruTags = Revealer({
                 child: Box({
                     className: 'spacing-h-5',
                     children: [
+                        TagButton('( * )'),
                         TagButton('hololive'),
-                        TagButton('yuri'),
-                        TagButton('thighhighs'),
                     ]
                 })
             }),
