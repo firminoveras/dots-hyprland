@@ -8,6 +8,7 @@ const { execAsync } = Utils;
 import Indicator from '../../../services/indicator.js';
 import { StatusIcons } from '../../.commonwidgets/statusicons.js';
 import { Tray } from "./tray.js";
+const { Box, Button } = Widget;
 import { distance } from '../../.miscutils/mathfuncs.js';
 
 const OSD_DISMISS_DISTANCE = 10;

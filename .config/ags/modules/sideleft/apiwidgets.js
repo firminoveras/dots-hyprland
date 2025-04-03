@@ -20,57 +20,6 @@ import { IconTabContainer } from '../.commonwidgets/tabcontainer.js';
 
 const EXPAND_INPUT_THRESHOLD = 30;
 
-const APILIST = {
-    'gemini': {
-        name: 'Assistant (Gemini Pro)',
-        sendCommand: geminiSendMessage,
-        contentWidget: geminiView,
-        commandBar: geminiCommands,
-        tabIcon: geminiTabIcon,
-        placeholderText: getString('Message Gemini...'),
-    },
-    'gpt': {
-        name: 'Assistant (GPTs)',
-        sendCommand: chatGPTSendMessage,
-        contentWidget: chatGPTView,
-        commandBar: chatGPTCommands,
-        tabIcon: chatGPTTabIcon,
-        placeholderText: getString('Message the model...'),
-    },
-    'waifu': {
-        name: 'Waifus',
-        sendCommand: waifuSendMessage,
-        contentWidget: waifuView,
-        commandBar: waifuCommands,
-        tabIcon: waifuTabIcon,
-        placeholderText: getString('Enter tags'),
-    },
-    'booru': {
-        name: 'Booru',
-        sendCommand: booruSendMessage,
-        contentWidget: booruView,
-        commandBar: booruCommands,
-        tabIcon: booruTabIcon,
-        placeholderText: getString('Enter tags'),
-    },
-}
-const APIS = userOptions.sidebar.pages.apis.order.map((apiName) => APILIST[apiName]);
-let currentApiId = 0;
-
-function apiSendMessage(textView) {
-    // Get text
-    const buffer = textView.get_buffer();
-    const [start, end] = buffer.get_bounds();
-    const text = buffer.get_text(start, end, true).trimStart();
-    if (!text || text.length == 0) return;
-    // Send
-    APIS[currentApiId].sendCommand(text)
-    // Reset
-    buffer.set_text("", -1);
-    chatEntryWrapper.toggleClassName('sidebar-chat-wrapper-extended', false);
-    chatEntry.set_valign(Gtk.Align.CENTER);
-}
-
 export const chatEntry = TextView({
     hexpand: true,
     wrapMode: Gtk.WrapMode.WORD_CHAR,
