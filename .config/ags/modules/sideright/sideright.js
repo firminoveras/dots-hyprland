@@ -63,7 +63,7 @@ const centerWidgets = [
         onFocus: () => execAsync('nmcli dev wifi list').catch(print),
     },
     {
-        name: getString('Live config'),
+        name: getString('Quick config'),
         materialIcon: 'tune',
         contentWidget: ModuleConfigure,
     },

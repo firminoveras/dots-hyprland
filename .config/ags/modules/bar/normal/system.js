@@ -21,7 +21,7 @@ const BarBatteryProgress = () => {
         circprog.toggleClassName('bar-batt-circprog-full', Battery.charged);
     }
     return AnimatedCircProg({
-        className: 'bar-batt-circprog',
+        className: `bar-batt-circprog ${userOptions.appearance.borderless ? 'bar-batt-circprog-borderless' : ''}`,
         vpack: 'center', hpack: 'center',
         extraSetup: (self) => self
             .hook(Battery, _updateProgress)
@@ -63,6 +63,38 @@ const BarClock = () => Widget.Box({
 });
 
 // End Firmino Veras Tweaks
+
+const UtilButton = ({ name, icon, onClicked }) => Button({
+    vpack: 'center',
+    tooltipText: name,
+    onClicked: onClicked,
+    className: `bar-util-btn ${userOptions.appearance.borderless ? 'bar-util-btn-borderless' : ''} icon-material txt-norm`,
+    label: `${icon}`,
+    setup: setupCursorHover
+})
+
+const Utilities = () => Box({
+    hpack: 'center',
+    className: 'spacing-h-4',
+    children: [
+        UtilButton({
+            name: getString('Screen snip'), icon: 'screenshot_region', onClicked: () => {
+                Utils.execAsync(`${App.configDir}/scripts/grimblast.sh copy area`)
+                    .catch(print)
+            }
+        }),
+        UtilButton({
+            name: getString('Color picker'), icon: 'colorize', onClicked: () => {
+                Utils.execAsync(['hyprpicker', '-a']).catch(print)
+            }
+        }),
+        UtilButton({
+            name: getString('Toggle on-screen keyboard'), icon: 'keyboard', onClicked: () => {
+                toggleWindowOnAllMonitors('osk');
+            }
+        }),
+    ]
+})
 
 const BarBattery = () => Box({
     className: 'spacing-h-4 bar-batt-txt',
@@ -106,7 +138,7 @@ const BarGroup = ({ child }) => Widget.Box({
     className: 'bar-group-margin bar-sides',
     children: [
         Widget.Box({
-            className: 'bar-group bar-group-standalone bar-group-pad-system',
+            className: `bar-group${userOptions.appearance.borderless ? '-borderless' : ''} bar-group-standalone bar-group-pad-system`,
             children: [child],
         }),
     ]
