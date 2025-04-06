@@ -6,53 +6,53 @@ import GLib from 'gi://GLib';
 import Soup from 'gi://Soup?version=3.0';
 import { fileExists } from '../modules/.miscutils/files.js';
 
-const PROVIDERS = Object.assign({ // There's this list hmm https://github.com/zukixa/cool-ai-stuff/
-    'openai': {
-        'name': 'OpenAI',
-        'logo_name': 'openai-symbolic',
-        'description': getString('Official OpenAI API.\nPricing: Free for the first $5 or 3 months, whichever is less.'),
-        'base_url': 'https://api.openai.com/v1/chat/completions',
-        'key_get_url': 'https://platform.openai.com/api-keys',
-        'key_file': 'openai_key.txt',
-        'model': 'gpt-3.5-turbo',
+const PROVIDERS = Object.assign({
+    "ollama": {
+        "name": "Ollama - Llama 3",
+        "logo_name": "ollama-symbolic",
+        "description": getString('Ollama - Llama-3'),
+        "base_url": 'http://localhost:11434/v1/chat/completions',
+        "key_get_url": "",
+        "key_file": "ollama_key.txt",
+        "model": "llama3",
     },
-    'ollama': {
-        'name': 'Ollama (Llama 3)',
-        'logo_name': 'ollama-symbolic',
-        'description': getString('Official Ollama API.\nPricing: Free.'),
-        'base_url': 'http://localhost:11434/v1/chat/completions',
-        'key_get_url': 'it\'s just ollama',
-        'key_file': 'ollama_key.txt',
-        'model': 'llama3:instruct',
+    "ollama_deepseek_r1": {
+        "name": "Ollama - DeepSeek R1",
+        "logo_name": "deepseek-symbolic",
+        "description": getString('That popular Chinese model that thinks thoroughly'),
+        "base_url": "http://localhost:11434/v1/chat/completions",
+        "key_get_url": "",
+        "key_file": "ollama_key.txt",
+        "model": "deepseek-r1",
     },
-    'openrouter': {
-        'name': 'OpenRouter (Llama-3-70B)',
-        'logo_name': 'openrouter-symbolic',
-        'description': getString('A unified interface for LLMs'),
-        'base_url': 'https://openrouter.ai/api/v1/chat/completions',
-        'key_get_url': 'https://openrouter.ai/keys',
-        'key_file': 'openrouter_key.txt',
-        'model': 'meta-llama/llama-3-70b-instruct',
+    "ollama_gemma3": {
+        "name": "Ollama - Gemma 3",
+        "logo_name": "google-gemini-symbolic",
+        "description": getString('Gemma 3 from Google. Runs on a single GPU.'),
+        "base_url": "http://localhost:11434/v1/chat/completions",
+        "key_get_url": "",
+        "key_file": "ollama_key.txt",
+        "model": "gemma3",
     },
-    'oxygen4o': {
-        'name': 'Oxygen (GPT-4o)',
-        'logo_name': 'ai-oxygen-symbolic',
-        'description': getString('An API from Tornado Softwares\nPricing: Free: 100/day\nRequires you to join their Discord for a key'),
-        'base_url': 'https://app.oxyapi.uk/v1/chat/completions',
-        'key_get_url': 'https://discord.com/invite/kM6MaCqGKA',
-        'key_file': 'oxygen_key.txt',
-        'model': 'gpt-4o',
+    "openrouter": {
+        "name": "OpenRouter (Llama-3-70B)",
+        "logo_name": "openrouter-symbolic",
+        "description": getString('A unified interface for LLMs'),
+        "base_url": "https://openrouter.ai/api/v1/chat/completions",
+        "key_get_url": "https://openrouter.ai/keys",
+        "key_file": "openrouter_key.txt",
+        "model": "meta-llama/llama-3-70b-instruct",
     },
-    'zukijourney': {
-        'name': 'zukijourney (GPT-3.5)',
-        'logo_name': 'ai-zukijourney',
-        'description': getString("An API from @zukixa on GitHub.\nNote: Keys are IP-locked so it's buggy sometimes\nPricing: Free: 10/min, 800/day.\nRequires you to join their Discord for a key"),
-        'base_url': 'https://zukijourney.xyzbot.net/v1/chat/completions',
-        'key_get_url': 'https://discord.com/invite/Y4J6XXnmQ6',
-        'key_file': 'zuki_key.txt',
-        'model': 'gpt-3.5-turbo',
+    "openai": {
+        "name": "OpenAI - GPT-3.5",
+        "logo_name": "openai-symbolic",
+        "description": getString('Official OpenAI API.\nPricing: Free for the first $5 or 3 months, whichever is less.'),
+        "base_url": "https://api.openai.com/v1/chat/completions",
+        "key_get_url": "https://platform.openai.com/api-keys",
+        "key_file": "openai_key.txt",
+        "model": "gpt-3.5-turbo",
     },
-}, userOptions.sidebar.ai.extraGptModels)
+}, userOptions.ai.extraGptModels)
 
 // Custom prompt
 const initMessages =
@@ -249,11 +249,11 @@ class GPTService extends Service {
         const aiResponse = new GPTMessage('assistant', '', true, false)
 
         const body = {
-            model: PROVIDERS[this._currentProvider]['model'],
-            messages: this._messages.map(msg => { let m = { role: msg.role, content: msg.content }; return m; }),
-            temperature: this._temperature,
-            // temperature: 2, // <- Nuts
-            stream: true,
+            "model": PROVIDERS[this._currentProvider]['model'],
+            "messages": this._messages.map(msg => { let m = { role: msg.role, content: msg.content }; return m; }),
+            "temperature": this._temperature,
+            "stream": true,
+            "keep_alive": userOptions.ai.keepAlive,
         };
         const proxyResolver = new Gio.SimpleProxyResolver({ 'default-proxy': userOptions.ai.proxyUrl });
         const session = new Soup.Session({ 'proxy-resolver': proxyResolver });
