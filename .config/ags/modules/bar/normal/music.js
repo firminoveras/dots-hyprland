@@ -200,7 +200,6 @@ export default () => {
             child: Box({
                 className: 'spacing-h-10',
                 children: [
-
                     EventBox({
                         onPrimaryClick: (self) => { self.child.children[1].revealChild = !self.child.children[1].revealChild; },
                         child: 
