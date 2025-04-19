@@ -304,21 +304,18 @@ apply_neovim() {
 	cp "$CACHE_DIR"/user/generated/neovim/base16.lua "$XDG_CONFIG_HOME"/astronvim_v4/lua/plugins/base16.lua
 }
 
-apply_zen() {
+apply_sherlock() {
 	# Copy template
-	mkdir -p "$CACHE_DIR"/user/generated/zen
-	cp "scripts/templates/zen/userChrome.css" "$CACHE_DIR"/user/generated/zen/userChrome.css
-	cp "scripts/templates/zen/userContent.css" "$CACHE_DIR"/user/generated/zen/userContent.css
+	mkdir -p "$CACHE_DIR"/user/generated/sherlock
+	cp "scripts/templates/sherlock/theme.css" "$CACHE_DIR"/user/generated/sherlock/theme.css
 
 	# Apply colors
 	for i in "${!colorlist[@]}"; do
-		sed -i "s/${colorlist[$i]} #/${colorvalues[$i]#\#}/g" "$CACHE_DIR"/user/generated/zen/userChrome.css
-		sed -i "s/${colorlist[$i]} #/${colorvalues[$i]#\#}/g" "$CACHE_DIR"/user/generated/zen/userContent.css
+		sed -i "s/${colorlist[$i]} #/${colorvalues[$i]#\#}/g" "$CACHE_DIR"/user/generated/sherlock/theme.css
 	done
 
 	# Udate file
-	cp "$CACHE_DIR"/user/generated/zen/userChrome.css "$XDG_HOME"'/.zen/fmpaicry.Default (release)/chrome/userChrome.css'
-	cp "$CACHE_DIR"/user/generated/zen/userContent.css "$XDG_HOME"'/.zen/fmpaicry.Default (release)/chrome/userContent.css'
+	cp "$CACHE_DIR"/user/generated/sherlock/theme.css "$XDG_CONFIG_HOME"/sherlock/theme.css
 }
 
 colornames=$(cat $STATE_DIR/scss/_material.scss | cut -d: -f1)
@@ -341,4 +338,4 @@ apply_foliate &
 apply_sddm &
 apply_neovim &
 apply_term &
-apply_zen
+apply_sherlock
