@@ -56,5 +56,97 @@ apply_qt() {
   python "$CONFIG_DIR/scripts/kvantum/changeAdwColors.py" # apply config colors
 }
 
+# FIRMINO
+apply_kitty() {
+	if ! which kitty &>/dev/null; then
+		echo "Kitty is not installed. Skipping that."
+		return
+	fi
+
+	# Copy template
+	mkdir -p "$CACHE_DIR"/user/generated/kitty
+	cp "$CONFIG_DIR/scripts/colors/templates/kitty/kitty.conf" "$CACHE_DIR"/user/generated/kitty/kitty.conf
+
+	# Apply colors
+	for i in "${!colorlist[@]}"; do
+		sed -i "s/${colorlist[$i]} #/${colorvalues[$i]#\#}/g" "$CACHE_DIR"/user/generated/kitty/kitty.conf
+	done
+
+	# Make sure that kitty.conf has 'include current-theme.conf' in it
+	mkdir -p "$XDG_CONFIG_HOME"/kitty
+	cp "$CACHE_DIR"/user/generated/kitty/kitty.conf "$XDG_CONFIG_HOME"/kitty/kitty.conf
+
+	# Reload theme in all open kitty terminals
+	kill -SIGUSR1 $(pgrep kitty)
+}
+
+apply_nchat() {
+	if ! which nchat &>/dev/null; then
+		echo "NChat is not installed. Skipping that."
+		return
+	fi
+
+	# Copy template
+	mkdir -p "$CACHE_DIR"/user/generated/nchat
+	cp "$CONFIG_DIR/scripts/colors/templates/nchat/color.conf" "$CACHE_DIR"/user/generated/nchat/color.conf
+
+	# Apply colors
+	for i in "${!colorlist[@]}"; do
+		sed -i "s/${colorlist[$i]} #/${colorvalues[$i]#\#}/g" "$CACHE_DIR"/user/generated/nchat/color.conf
+	done
+
+	# Udate file
+	mkdir -p "$XDG_CONFIG_HOME"/nchat
+	cp "$CACHE_DIR"/user/generated/nchat/color.conf "$XDG_CONFIG_HOME"/nchat/color.conf
+}
+
+apply_sddm() {
+	# Copy template
+	mkdir -p "$CACHE_DIR"/user/generated/sddm
+	cp "$CONFIG_DIR/scripts/colors/templates/sddm/theme.conf" "$CACHE_DIR"/user/generated/sddm/theme.conf
+
+	# Apply colors
+	for i in "${!colorlist[@]}"; do
+		sed -i "s/${colorlist[$i]} #/${colorvalues[$i]#\#}/g" "$CACHE_DIR"/user/generated/sddm/theme.conf
+	done
+
+	# Udate file
+	cp "$CACHE_DIR"/user/generated/sddm/theme.conf /usr/share/sddm/themes/sdt/theme.conf
+}
+
+apply_neovim() {
+	# Copy template
+	mkdir -p "$CACHE_DIR"/user/generated/neovim
+	cp "$CONFIG_DIR/scripts/colors/templates/neovim/base16.lua" "$CACHE_DIR"/user/generated/neovim/base16.lua
+
+	# Apply colors
+	for i in "${!colorlist[@]}"; do
+		sed -i "s/${colorlist[$i]} #/${colorvalues[$i]#\#}/g" "$CACHE_DIR"/user/generated/neovim/base16.lua
+	done
+
+	# Udate file
+	cp "$CACHE_DIR"/user/generated/neovim/base16.lua "$XDG_CONFIG_HOME"/astronvim_v4/lua/plugins/base16.lua
+}
+
+apply_sherlock() {
+	# Copy template
+	mkdir -p "$CACHE_DIR"/user/generated/sherlock
+	cp "$CONFIG_DIR/scripts/colors/templates/sherlock/theme.css" "$CACHE_DIR"/user/generated/sherlock/theme.css
+
+	# Apply colors
+	for i in "${!colorlist[@]}"; do
+		sed -i "s/${colorlist[$i]} #/${colorvalues[$i]#\#}/g" "$CACHE_DIR"/user/generated/sherlock/theme.css
+	done
+
+	# Udate file
+	cp "$CACHE_DIR"/user/generated/sherlock/theme.css "$XDG_CONFIG_HOME"/sherlock/theme.css
+}
+
+apply_kitty &
+apply_nchat &
+apply_sddm &
+apply_neovim &
+apply_sherlock
+
 apply_qt &
 apply_term &
