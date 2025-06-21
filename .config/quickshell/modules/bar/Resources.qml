@@ -17,13 +17,13 @@ Item {
     RowLayout {
         id: rowLayout
 
-        spacing: 0
+        spacing: 8
         anchors.fill: parent
         anchors.leftMargin: 4
         anchors.rightMargin: 4
 
         Resource {
-            iconName: "memory"
+            iconName: "memory_alt"
             percentage: ResourceUsage.memoryUsedPercentage
         }
 
@@ -37,7 +37,7 @@ Item {
         }
 
         Resource {
-            iconName: "settings_slow_motion"
+            iconName: "memory"
             percentage: ResourceUsage.cpuUsage
             shown: ConfigOptions.bar.resources.alwaysShowCpu || 
                 !(MprisController.activePlayer?.trackTitle?.length > 0) ||
