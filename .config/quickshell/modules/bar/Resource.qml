@@ -15,7 +15,7 @@ Item {
     implicitHeight: childrenRect.height
 
     RowLayout {
-        spacing: 4
+        spacing: 2
         id: resourceRowLayout
         x: shown ? 0 : -resourceRowLayout.width
 
