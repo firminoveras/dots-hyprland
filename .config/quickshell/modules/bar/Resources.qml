@@ -27,14 +27,14 @@ Item {
             percentage: ResourceUsage.memoryUsedPercentage
         }
 
-        Resource {
-            iconName: "swap_horiz"
-            percentage: ResourceUsage.swapUsedPercentage
-            shown: (ConfigOptions.bar.resources.alwaysShowSwap && percentage > 0) || 
-                (MprisController.activePlayer?.trackTitle == null) ||
-                root.alwaysShowAllResources
-            Layout.leftMargin: shown ? 4 : 0
-        }
+        // Resource {
+        //     iconName: "swap_horiz"
+        //     percentage: ResourceUsage.swapUsedPercentage
+        //     shown: (ConfigOptions.bar.resources.alwaysShowSwap && percentage > 0) || 
+        //         (MprisController.activePlayer?.trackTitle == null) ||
+        //         root.alwaysShowAllResources
+        //     Layout.leftMargin: shown ? 4 : 0
+        // }
 
         Resource {
             iconName: "memory"
