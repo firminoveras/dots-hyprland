@@ -17,27 +17,27 @@ Item {
     RowLayout {
         id: rowLayout
 
-        spacing: 0
+        spacing: 8
         anchors.fill: parent
         anchors.leftMargin: 4
         anchors.rightMargin: 4
 
         Resource {
-            iconName: "memory"
+            iconName: "memory_alt"
             percentage: ResourceUsage.memoryUsedPercentage
         }
 
-        Resource {
-            iconName: "swap_horiz"
-            percentage: ResourceUsage.swapUsedPercentage
-            shown: (Config.options.bar.resources.alwaysShowSwap && percentage > 0) || 
-                (MprisController.activePlayer?.trackTitle == null) ||
-                root.alwaysShowAllResources
-            Layout.leftMargin: shown ? 4 : 0
-        }
+        // Resource {
+        //     iconName: "swap_horiz"
+        //     percentage: ResourceUsage.swapUsedPercentage
+        //     shown: (Config.options.bar.resources.alwaysShowSwap && percentage > 0) || 
+        //         (MprisController.activePlayer?.trackTitle == null) ||
+        //         root.alwaysShowAllResources
+        //     Layout.leftMargin: shown ? 4 : 0
+        // }
 
         Resource {
-            iconName: "settings_slow_motion"
+            iconName: "memory"
             percentage: ResourceUsage.cpuUsage
             shown: Config.options.bar.resources.alwaysShowCpu || 
                 !(MprisController.activePlayer?.trackTitle?.length > 0) ||
