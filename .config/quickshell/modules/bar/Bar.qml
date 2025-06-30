@@ -239,6 +239,11 @@ Scope {
                             Layout.fillWidth: barRoot.useShortenedForm === 2
                         }
 
+                        BatteryIndicator {
+                            visible: (barRoot.useShortenedForm < 2 && UPower.displayDevice.isLaptopBattery)
+                            Layout.alignment: Qt.AlignVCenter
+                        }
+
                         Media {
                             visible: barRoot.useShortenedForm < 2
                             Layout.fillWidth: true
@@ -295,16 +300,6 @@ Scope {
                                 showDate: (Config.options.bar.verbose && barRoot.useShortenedForm < 2)
                                 Layout.alignment: Qt.AlignVCenter
                                 Layout.fillWidth: true
-                            }
-
-                            UtilButtons {
-                                visible: (Config.options.bar.verbose && barRoot.useShortenedForm === 0)
-                                Layout.alignment: Qt.AlignVCenter
-                            }
-
-                            BatteryIndicator {
-                                visible: (barRoot.useShortenedForm < 2 && UPower.displayDevice.isLaptopBattery)
-                                Layout.alignment: Qt.AlignVCenter
                             }
                         }
                     }
@@ -471,6 +466,11 @@ Scope {
                                         color: rightSidebarButton.colText
                                     }
                                 }
+                            }
+
+                            UtilButtons {
+                                visible: (Config.options.bar.verbose && barRoot.useShortenedForm === 0)
+                                Layout.alignment: Qt.AlignVCenter
                             }
 
                             SysTray {
