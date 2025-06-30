@@ -4,7 +4,7 @@ import qs.services
 import QtQuick
 import QtQuick.Layouts
 
-MouseArea {
+Item {
     id: root
     property bool borderless: Config.options.bar.borderless
     readonly property var chargeState: Battery.chargeState
@@ -12,11 +12,11 @@ MouseArea {
     readonly property bool isPluggedIn: Battery.isPluggedIn
     readonly property real percentage: Battery.percentage
     readonly property bool isLow: percentage <= Config.options.battery.low / 100
+    readonly property color batteryLowBackground: Appearance.m3colors.darkmode ? Appearance.m3colors.m3error : Appearance.m3colors.m3errorContainer
+    readonly property color batteryLowOnBackground: Appearance.m3colors.darkmode ? Appearance.m3colors.m3errorContainer : Appearance.m3colors.m3error
 
     implicitWidth: rowLayout.implicitWidth + rowLayout.spacing * 2
-    implicitHeight: Appearance.sizes.barHeight
-
-    hoverEnabled: true
+    implicitHeight: 32
 
     RowLayout {
         id: rowLayout
@@ -24,42 +24,26 @@ MouseArea {
         spacing: 4
         anchors.centerIn: parent
 
-        ClippedProgressBar {
-            id: batteryProgress
+        CircularProgress {
+            enableAnimation: false
+            Layout.alignment: Qt.AlignVCenter
+            lineWidth: 2
             value: percentage
-            highlightColor: (isLow && !isCharging) ? Appearance.m3colors.m3error : Appearance.colors.colOnSecondaryContainer
+            implicitSize: 26
+            colSecondary: (isLow && !isCharging) ? batteryLowBackground : Appearance.colors.colSecondaryContainer
+            colPrimary: (isLow && !isCharging) ? batteryLowOnBackground : Appearance.m3colors.m3onSecondaryContainer
+            fill: (isLow && !isCharging)
 
-            Item {
+            MaterialSymbol {
                 anchors.centerIn: parent
-                width: batteryProgress.valueBarWidth
-                height: batteryProgress.valueBarHeight
-
-                RowLayout {
-                    anchors.centerIn: parent
-                    spacing: 0
-
-                    MaterialSymbol {
-                        id: boltIcon
-                        Layout.alignment: Qt.AlignVCenter
-                        Layout.leftMargin: -2
-                        Layout.rightMargin: -2
-                        fill: 1
-                        text: "bolt"
-                        iconSize: Appearance.font.pixelSize.smaller
-                        visible: isCharging && percentage < 1 // TODO: animation
-                    }
-                    StyledText {
-                        Layout.alignment: Qt.AlignVCenter
-                        font: batteryProgress.font
-                        text: batteryProgress.text
-                    }
-                }
+                fill: 1
+                text: (isCharging? "bolt" : "battery_full")
+                iconSize: Appearance.font.pixelSize.normal
+                color: (isLow && !isCharging) ? batteryLowOnBackground : Appearance.m3colors.m3onSecondaryContainer
             }
+
         }
+
     }
 
-    BatteryPopup {
-        id: batteryPopup
-        hoverTarget: root
-    }
 }
