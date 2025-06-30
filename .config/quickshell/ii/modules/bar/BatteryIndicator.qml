@@ -24,20 +24,6 @@ Item {
         spacing: 4
         anchors.centerIn: parent
 
-        Rectangle {
-            implicitWidth: (isCharging ? (boltIconLoader?.item?.width ?? 0) : 0)
-
-            Behavior on implicitWidth {
-                animation: Appearance.animation.elementMove.numberAnimation.createObject(this)
-            }
-        }
-
-        StyledText {
-            Layout.alignment: Qt.AlignVCenter
-            color: Appearance.colors.colOnLayer1
-            text: `${Math.round(percentage * 100)}`
-        }
-
         CircularProgress {
             Layout.alignment: Qt.AlignVCenter
             lineWidth: 2
@@ -50,45 +36,13 @@ Item {
             MaterialSymbol {
                 anchors.centerIn: parent
                 fill: 1
-                text: "battery_full"
+                text: (isCharging? "bolt" : "battery_full")
                 iconSize: Appearance.font.pixelSize.normal
                 color: (isLow && !isCharging) ? batteryLowOnBackground : Appearance.m3colors.m3onSecondaryContainer
             }
 
         }
 
-    }
-
-    Loader {
-        id: boltIconLoader
-        active: true
-        anchors.left: rowLayout.left
-        anchors.verticalCenter: rowLayout.verticalCenter
-
-        Connections {
-            target: root
-            function onIsChargingChanged() {
-                if (isCharging) boltIconLoader.active = true
-            }
-        }
-
-        sourceComponent: MaterialSymbol {
-            id: boltIcon
-
-            text: "bolt"
-            iconSize: Appearance.font.pixelSize.large
-            color: Appearance.m3colors.m3onSecondaryContainer
-            visible: opacity > 0 // Only show when charging
-            opacity: isCharging ? 1 : 0 // Keep opacity for visibility
-            onVisibleChanged: {
-                if (!visible) boltIconLoader.active = false
-            }
-
-            Behavior on opacity {
-                animation: Appearance.animation.elementMove.numberAnimation.createObject(this)
-            }
-
-        }
     }
 
 }

@@ -35,11 +35,11 @@ Item {
 
         }
 
-        StyledText {
-            Layout.alignment: Qt.AlignVCenter
-            color: Appearance.colors.colOnLayer1
-            text: `${Math.round(percentage * 100)}`
-        }
+        // StyledText {
+        //     Layout.alignment: Qt.AlignVCenter
+        //     color: Appearance.colors.colOnLayer1
+        //     text: `${Math.round(percentage * 100)}`
+        // }
 
         Behavior on x {
             animation: Appearance.animation.elementMove.numberAnimation.createObject(this)
