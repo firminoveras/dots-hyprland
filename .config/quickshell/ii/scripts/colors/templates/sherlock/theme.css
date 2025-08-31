@@ -1,0 +1,663 @@
+:root {
+    --background: #$background #;
+    --foreground: #$surfaceContainer #;
+    --text: #$onBackground #;
+    --border: #$surfaceContainerHigh #;
+
+    --tag-background: #$surfaceContainerHigh #;
+    --tag-color: #$onBackground #;
+    --error: #ff4d4d; /* 4, 71%, 62% */
+    --warning: #ffff00; /* 55, 100%, 68% */
+    --success: #4dff4d; /* 140, 40%, 40% */
+
+    --weather-clear: #66b3ff; /* 210, 60%, 70% */
+    --weather-few-clouds: #cce0ff; /* 210, 30%, 85% */
+    --weather-many-clouds: #99b3cc; /* 220, 0%, 70% */
+    --weather-mist: #d9d9b3; /* 60, 10%, 80% */
+    --weather-showers: #99b3cc; /* 200, 10%, 50% */
+    --weather-freezing-scattered-rain-storm: #4d4d66; /* 220, 30%, 35% */
+    --weather-freezing-scattered-rain: #666666; /* 220, 40%, 45% */
+    --weather-snow-scattered-day: #cce6ff; /* 200, 40%, 95% */
+    --weather-storm: #1a1a33; /* 240, 10%, 20% */
+    --weather-snow-storm: #b3cce6; /* 210, 20%, 92% */
+    --weather-snow-scattered-storm: #b3cce6; /* 210, 10%, 25% */
+    --weather-showers-scattered: #99b3cc; /* 200, 30%, 65% */
+    --weather-none-available: #808080; /* 0, 0%, 50% */
+}
+
+overshoot *,
+undershoot *,
+overshoot.top,
+overshoot.right,
+overshoot.bottom,
+overshoot.left undershoot.top,
+undershoot.right,
+undershoot.bottom,
+undershoot.left,
+.scroll-window>*,
+overshoot:backdrop {
+    background: none;
+    border: none;
+    background-color: transparent;
+}
+
+* {
+    padding: 0px;
+    margin: 0px;
+    -gtk-secondary-caret-color: var(--background);
+    outline-width: 0px;
+    outline-offset: -3px;
+    outline-style: dashed;
+    line-height: 1;
+    font-family: "Cantarell";
+}
+
+#overlay spinner {
+    color: var(--text);
+}
+
+#overlay * {
+    background: transparent;
+}
+
+.notifications {
+    background: transparent;
+}
+
+scrolledwindow > viewport,
+scrolledwindow > viewport > *,
+window {
+    background: var(--background);
+}
+
+label {
+    color: var(--text);
+}
+
+window {
+    color: var(--text);
+    border-radius: 16px;
+    border: 2px solid var(--border);
+}
+
+/* STATUS BAR */
+.status-bar {
+    background: #$onPrimary #33;
+    border-top: 1px solid var(--border);
+    padding: 4px 10px 4px 20px;
+}
+
+.status-bar label {
+    color: #$onBackground #33;
+}
+
+.spinner-disappear {
+    animation: vanish-rotate 0.3s ease forwards;
+}
+
+.spinner-appear {
+    animation: ease-opacity 0.3s ease forwards;
+    animation: rotate 0.3s linear infinite;
+}
+
+/* SEARCH PAGE */
+#search-bar {
+    outline: none;
+    border: none;
+    background: var(--background);
+    min-height: 40px;
+    color: var(--text);
+    font-size: 15px;
+    padding-left: 20px;
+}
+
+#search-bar-holder {
+    padding: 5px 10px 4px 10px;
+}
+
+#search-icon-holder image {
+    transition: 0.1s ease;
+}
+
+#search-icon-holder.search image:nth-child(1) {
+    transition-delay: 0.05s;
+    opacity: 1;
+}
+
+#search-icon-holder.search image:nth-child(2) {
+    transform: rotate(-180deg);
+    opacity: 0;
+}
+
+#search-icon-holder.back image:nth-child(1) {
+    opacity: 0;
+}
+
+#search-icon-holder.back image:nth-child(2) {
+    transition-delay: 0.05s;
+    opacity: 1;
+}
+
+#search-icon {
+    margin-left: 10px;
+}
+
+#search-bar:focus {
+    outline: none;
+}
+
+#search-bar placeholder {
+    background: transparent;
+    background-color: transparent;
+    color: #$onBackground #AA;
+    font-weight: 500;
+}
+
+#category-type {
+    font-size: 13px;
+    font-weight: bold;
+    color: var(--text);
+    opacity: 0.3;
+    padding: 10px 20px 0px 20px;
+}
+
+.scrolled-window {
+    padding: 10px 10px 5px 10px;
+    min-width: var(--width) * 0.8;
+}
+
+scrollbar {
+    transform: translate(8px, 0px);
+    border: none;
+    background: none;
+}
+
+scrollbar slider {
+    background: #$onBackground #20;
+    border: none;
+}
+
+image {
+    color: white;
+}
+
+.tile {
+    outline: none;
+    min-height: 50px;
+    padding: 0px 10px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+}
+
+.tile:hover *,
+.tile:hover {
+    background: transparent;
+}
+
+.tile.animate {
+    transform: translateY(20px);
+    opacity: 0;
+    animation: fadeInUp 0.2s ease-out forwards;
+}
+
+.tile.animate:nth-child(1) {
+    animation-delay: 0.05s;
+}
+
+.tile.animate:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.tile.animate:nth-child(3) {
+    animation-delay: 0.15s;
+}
+
+.tile.animate:nth-child(4) {
+    animation-delay: 0.2s;
+}
+
+.tile.animate:nth-child(5) {
+    animation-delay: 0.25s;
+}
+
+.tile.animate:nth-child(6) {
+    animation-delay: 0.3s;
+}
+
+.tile.animate:nth-child(7) {
+    animation-delay: 0.35s;
+}
+
+.tile.animate:nth-child(8) {
+    animation-delay: 0.4s;
+}
+
+.tile.animate:nth-child(9) {
+    animation-delay: 0.45s;
+}
+
+.tile.animate:nth-child(10) {
+    animation-delay: 0.5s;
+}
+
+@keyframes fadeInUp {
+    from {
+        letter-spacing: 1px;
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        letter-spacing: 0px;
+        opacity: 1;
+        transform: translate(0px);
+    }
+}
+
+.tile #title {
+    font-size: 15px;
+    color: var(--text);
+}
+
+.tile #icon {
+    margin: 0px;
+    padding: 0px;
+}
+
+.tile:selected {
+    transition: 0.1s ease;
+    background: var(--foreground);
+    background-color: var(--foreground);
+    outline: none;
+    border: none;
+}
+
+.tile:selected .tag,
+.tag {
+    font-size: 11px;
+    border-radius: 3px;
+    padding: 2px 8px;
+    color: var(--tag-color);
+    box-shadow: 0px 0px 10px 0px rgba(2,2,2,0.4);
+    border: 1px solid var(--text);
+    margin-left: 7px;
+}
+
+.tile:selected .tag-start,
+.tag-start {
+    background: var(--tag-background);
+}
+
+.tile:selected .tag-end,
+.tag-end {
+    background: var(--success);
+}
+
+.tile:focus {
+    outline: none;
+}
+
+#launcher-type {
+    font-size: 10px;
+    color: var(--text);
+    margin-left: 0px;
+}
+
+#color-icon-holder {
+    border-radius: 50px;
+}
+
+/* SHORTCUT */
+#shortcut-holder {
+    margin-right: 25px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid var(--text);
+    box-shadow: 0px 0px 6px 0px rgba(15,15,15,1);
+}
+
+.tile:selected #shortcut-holder {
+    background: var(--background);
+    background-color: var(--background);
+    color: var(--text);
+    box-shadow: 0px 0px 6px 0px rgba(22,22,22,1);
+}
+
+#shortcut, #shortcut-modkey {
+    background: var(--background);
+    background-color: var(--background);
+    font-size: 11px;
+    font-weight: bold;
+    color: var(--text);
+}
+
+#shortcut-modkey {
+    font-size: 13px;
+}
+
+/* CALCULATOR */
+.calc-tile {
+    padding: 10px 10px 20px 10px;
+    border-radius: 5px;
+}
+
+#calc-tile-quation {
+    font-size: 10px;
+    color: gray;
+}
+
+#calc-tile-result {
+    font-size: 25px;
+    color: gray;
+}
+
+/* EVENT TILE */
+.tile.tile.event-tile {
+    padding: 5px 10px;
+}
+
+.tile.event-tile #title-label {
+    padding: 2px 0px 7px 5px;
+    text-transform: capitalize;
+}
+
+.tile.event-tile #time-label {
+    font-size: 3rem;
+}
+
+#end-time-label {
+    color: gray;
+}
+
+/* BULK TEXT TILE */
+.bulk-text {
+    padding-bottom: 10px;
+    min-height: 50px;
+}
+
+#bulk-text-title {
+    margin-left: 10px;
+    padding: 10px 0px;
+    font-size: 10px;
+    color: gray;
+}
+
+#bulk-text-content-title {
+    font-size: 17px;
+    font-weight: bold;
+    color: var(--text);
+    min-height: 20px;
+}
+
+#bulk-text-content-body {
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.4;
+    min-height: 20px;
+}
+
+/* MPRIS TILE */
+#mpris-icon-holder {
+    border-radius: 5px;
+}
+
+/* Animation for replacing album covers */
+.image-replace-overlay #album-cover {
+    opacity: 1;
+    animation: ease-opacity 0.5s forwards;
+}
+
+/* NEXT PAGE */
+.next_tile {
+    color: var(--text);
+    background: var(--background);
+}
+
+.next_tile #content-body {
+    background: var(--background);
+    padding: 10px;
+    color: var(--text);
+}
+
+.raw_text, .next_tile #content-body {
+    font-family: 'Fira Code', monospace;
+    font-feature-settings: "kern" off;
+    font-kerning: None;
+}
+
+/* Error */
+.error-tile #scroll-window {
+    padding: 10px;
+    min-height: 50px;
+}
+
+.error-tile {
+    border-radius: 4px;
+    padding: 5px 10px 10px 10px;
+    color: white;
+    border: 1px solid transparent;
+    margin-bottom: 10px;
+}
+
+.error-tile * {
+    background: transparent;
+}
+
+.error {
+    border: 1px solid var(--error);
+    background: var(--error);
+}
+
+.warning {
+    border: 1px solid var(--warning);
+    background: var(--warning);
+}
+
+.error-tile #title {
+    padding: 10px;
+    font-size: 10px;
+    color: gray;
+}
+
+.error-tile #content-title {
+    margin-left: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--text);
+}
+
+.error-tile #content-body {
+    margin-left: 10px;
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.4;
+    color: gray;
+}
+
+/* STATUS BAR */
+.status-bar {
+    background: var(--foreground);
+    border-top: 1px solid var(--border);
+    padding: 4px 10px 4px 20px;
+}
+
+.status-bar label {
+    color: var(--text);
+}
+
+@keyframes slide {
+    from {
+        transform: translate(0px, 0px);
+    }
+
+    to {
+        transform: translate(-20px, 0px);
+    }
+}
+
+/* WEATHER TILE */
+.weather-tile {
+    padding: 0px 20px 0px 10px;
+    background: darkgray;
+    margin-bottom: 10px;
+}
+
+.tile.weather-tile #content-holder {
+    opacity: 0;
+}
+
+.tile.weather-tile.weather-animate #content-holder {
+    animation: ease-opacity 0.3s forwards;
+    transition: background 0.3s ease;
+    opacity: 1;
+}
+
+.tile.weather-tile.weather-no-animate #content-holder {
+    opacity: 1;
+}
+
+.tile.weather-tile #location {
+    margin-left: 5px;
+    padding: 10px 0px;
+    font-size: 10px;
+}
+
+.tile.weather-tile #temperature {
+    font-size: 30px;
+}
+
+.tile.weather-tile #content-holder {
+    margin-bottom: 15px;
+}
+
+/* WEATHER CLASSES */
+.tile.weather-tile.weather-clear {
+    background: var(--weather-clear); /* Light sky blue */
+}
+.tile.weather-tile.weather-clear label {
+    color: var(--text);
+}
+
+.tile.weather-tile.weather-few-clouds {
+    background: var(--weather-few-clouds); /* Very light */
+}
+.tile.weather-tile.weather-few-clouds label {
+    color: var(--text-alternate);
+}
+
+.tile.weather-tile.weather-many-clouds {
+    background: var(--weather-many-clouds); /* Medium-light */
+}
+.tile.weather-tile.weather-many-clouds label {
+    color: var(--text);
+}
+
+.tile.weather-tile.weather-mist {
+    background: var(--weather-mist); /* Light beige */
+}
+.tile.weather-tile.weather-mist label {
+    color: var(--text-alternate);
+}
+
+.tile.weather-tile.weather-showers {
+    background: var(--weather-showers); /* Medium-dark blue */
+}
+.tile.weather-tile.weather-showers label {
+    color: var(--text);
+}
+
+.tile.weather-tile.weather-freezing-scattered-rain-storm {
+    background: var(--weather-freezing-scattered-rain-storm);
+}
+.tile.weather-tile.weather-freezing-scattered-rain-storm label {
+    color: var(--text);
+}
+
+.tile.weather-tile.weather-freezing-scattered-rain {
+    background: var(--weather-freezing-scattered-rain);
+}
+.tile.weather-tile.weather-freezing-scattered-rain label {
+    color: var(--text);
+}
+
+.tile.weather-tile.weather-snow-scattered-day {
+    background: var(--weather-snow-scattered-day);
+}
+.tile.weather-tile.weather-snow-scattered-day label {
+    color: var(--text-alternate);
+}
+
+.tile.weather-tile.weather-storm {
+    background: var(--weather-storm); /* Very dark */
+}
+.tile.weather-tile.weather-storm label {
+    color: var(--text);
+}
+
+.tile.weather-tile.weather-snow-storm {
+    background: var(--weather-snow-storm); /* Light */
+}
+.tile.weather-tile.weather-snow-storm label {
+    color: var(--text-alternate);
+}
+
+.tile.weather-tile.weather-snow-scattered-storm {
+    background: var(--weather-snow-scattered-storm); /* Still light */
+}
+.tile.weather-tile.weather-snow-scattered-storm label {
+    color: var(--text);
+}
+
+.tile.weather-tile.weather-showers-scattered {
+    background: var(--weather-showers-scattered);
+}
+.tile.weather-tile.weather-showers-scattered label {
+    color: var(--text);
+}
+
+.tile.weather-tile.weather-none-available {
+    background: var(--weather-none-available); /* Neutral gray */
+}
+.tile.weather-tile.weather-none-available label {
+    color: var(--text);
+}
+
+/* ANIMATIONS */
+@keyframes vanish-rotate {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+        --start-rotation: 0deg;
+    }
+    to {
+        transform: rotate(360deg);
+        --start-rotation: 360deg;
+    }
+}
+
+@keyframes ease-opacity {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slide {
+    from {
+        transform: translate(0px, 0px);
+    }
+
+    to {
+        transform: translate(-20px, 0px);
+    }
+}

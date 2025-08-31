@@ -11,7 +11,6 @@ ContentPage {
     forceWidth: true
 
     ContentSection {
-        icon: "box"
         title: Translation.tr("Distro")
         
         RowLayout {
@@ -80,7 +79,6 @@ ContentPage {
 
     }
     ContentSection {
-        icon: "folder_managed"
         title: Translation.tr("Dotfiles")
 
         RowLayout {

@@ -21,7 +21,7 @@ StyledPopup {
             MaterialSymbol {
                 fill: 0
                 font.weight: Font.Medium
-                text: "battery_android_full"
+                text: "battery_full_alt"
                 iconSize: Appearance.font.pixelSize.large
                 color: Appearance.colors.colOnSurfaceVariant
             }

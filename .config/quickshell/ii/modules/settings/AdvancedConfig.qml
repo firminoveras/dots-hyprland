@@ -8,7 +8,6 @@ ContentPage {
     forceWidth: true
 
     ContentSection {
-        icon: "colors"
         title: Translation.tr("Color generation")
 
         ConfigRow {

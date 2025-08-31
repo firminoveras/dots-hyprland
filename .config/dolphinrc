@@ -1,10 +1,18 @@
+[ContextMenu]
+ShowOpenInNewTab=false
+ShowOpenInNewWindow=false
+ShowOpenInSplitView=false
+ShowOpenTerminal=false
+
 [DetailsMode]
 PreviewSize=32
 
 [General]
-GlobalViewProps=false
+DoubleClickViewAction=open_terminal
+LockPanels=false
 ShowFullPath=true
-ShowStatusBar=FullWidth
+ShowSelectionToggle=false
+ShowStatusBar=Disabled
 Version=202
 
 [KFileDialog Settings]
@@ -15,4 +23,10 @@ Places Icons Static Size=22
 MenuBar=Disabled
 
 [PreviewSettings]
-Plugins=ffmpegthumbnailer,appimagethumbnail,audiothumbnail,avif,blenderthumbnail,comicbookthumbnail,cursorthumbnail,djvuthumbnail,ebookthumbnail,exrthumbnail,directorythumbnail,fontthumbnail,heif,imagethumbnail,jpegthumbnail,jxl,kraorathumbnail,windowsexethumbnail,windowsimagethumbnail,mobithumbnail,opendocumentthumbnail,gsthumbnail,rawthumbnail,librsvg,svgthumbnail,ffmpegthumbs,gdk-pixbuf-thumbnailer,gsf-office
+Plugins=appimagethumbnail,cursorthumbnail,fontthumbnail,audiothumbnail,djvuthumbnail,avif,comicbookthumbnail,gdk-pixbuf-thumbnailer,gsf-office,opendocumentthumbnail,kraorathumbnail,ebookthumbnail,windowsexethumbnail,heif,librsvg,imagethumbnail,windowsimagethumbnail,exrthumbnail,jpegthumbnail,svgthumbnail,jxl
+
+[VersionControl]
+enabledPlugins=Git
+
+[ViewPropertiesDialog]
+1920x1080 screen: Window-Maximized=true

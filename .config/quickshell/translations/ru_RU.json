@@ -387,5 +387,12 @@
   "When enabled keeps the content of the right sidebar loaded to reduce the delay when opening,\nat the cost of around 15MB of consistent RAM usage. Delay significance depends on your system's performance.\nUsing a custom kernel like linux-cachyos might help": "При включении этого параметра содержимое правой боковой панели сохраняется загруженным, что сокращает задержку при открытии,\nзатрачивая около 15 МБ постоянного использования оперативной памяти. Длительность задержки зависит от производительности вашей системы.\nИспользование пользовательского ядра, например, linux-cachyos, может помочь.",
   "High": "Высокий",
   "Focus": "Фокус",
-  "Load:": "Load:"
+  "Load:": "Load:",
+  "Bar layout": "Bar layout",
+  "Refreshing (manually triggered)": "Refreshing (manually triggered)",
+  "Attach a file. Only works with Gemini.": "Attach a file. Only works with Gemini.",
+  "Open the shell config file.\nIf the button doesn't work or doesn't open in your favorite editor,\nyou can manually open ~/.config/illogical-impulse/config.json": "Open the shell config file.\nIf the button doesn't work or doesn't open in your favorite editor,\nyou can manually open ~/.config/illogical-impulse/config.json",
+  "Config file": "Config file",
+  "Feels like %1": "Feels like %1",
+  "Corner style": "Corner style"
 }
