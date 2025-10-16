@@ -425,6 +425,9 @@ main() {
     fi
 
     switch "$imgpath" "$mode_flag" "$type_flag" "$color_flag" "$color"
+
+    # Change background of SDDM
+    cp "$imgpath" /usr/share/sddm/themes/sdt/background.jpg
 }
 
 main "$@"

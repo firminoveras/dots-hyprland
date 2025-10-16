@@ -4,3 +4,15 @@
 __pycache__/
 *.py[cod]
 dots/.config/quickshell/ii/.qmlls.ini
+
+# dots personal
+dots/.config/fish/completions
+dots/.config/fish/conf.d
+dots/.config/fish/functions
+dots/.config/nchat/emojis/
+dots/.config/nchat/history/
+dots/.config/nchat/profiles/
+dots/.config/nchat/color.conf
+dots/.config/nchat/log*
+dots/.config/nchat/usercolor.conf
+dots/.config/yazi/theme.toml

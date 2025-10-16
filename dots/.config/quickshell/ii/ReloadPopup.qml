@@ -15,6 +15,7 @@ Scope {
 		function onReloadCompleted() {
 			root.failed = false;
 			popupLoader.loading = true;
+      Quickshell.execDetached(["hyprctl", "reload"]);
 		}
 
 		function onReloadFailed(error: string) {

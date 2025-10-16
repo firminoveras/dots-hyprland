@@ -12,6 +12,16 @@ Scope {
     id: bar
     property bool showBarBackground: Config.options.bar.showBackground
 
+    function updateHyprlandAppearance(show) {
+        Quickshell.execDetached(["hyprctl", "keyword", "general:gaps_out", show ? "5" : "0"]);
+        Quickshell.execDetached(["hyprctl", "keyword", "general:gaps_in", show ? "4" : "0"]);
+        // Quickshell.execDetached(["hyprctl", "keyword", "general:border_size", show ? "2" : "0"]);
+        Quickshell.execDetached(["hyprctl", "keyword", "decoration:rounding", show ? "18" : "0"]);
+        Quickshell.execDetached(["hyprctl", "keyword", "decoration:inactive_opacity", show ? "0.9" : "1"]);
+        Quickshell.execDetached(["hyprctl", "keyword", "decoration:active_opacity", show ? "0.9" : "1"]);
+        Config.options.appearance.fakeScreenRounding = show ? 2 : 0;
+    }
+
     Variants {
         // For each monitor
         model: {
@@ -54,8 +64,11 @@ Scope {
                 }
                 property bool superShow: false
                 property bool mustShow: hoverRegion.containsMouse || superShow
+                onMustShowChanged: {
+                  if(Config?.options.bar.autoHide.enable) updateHyprlandAppearance(mustShow)
+                }
                 exclusionMode: ExclusionMode.Ignore
-                exclusiveZone: (Config?.options.bar.autoHide.enable && (!mustShow || !Config?.options.bar.autoHide.pushWindows)) ? 0 :
+                exclusiveZone: (Config?.options.bar.autoHide.enable && (!mustShow || !Config?.options.bar.autoHide.pushWindows)) ? (mustShow ? Appearance.sizes.baseBarHeight: 0) :
                     Appearance.sizes.baseBarHeight + (Config.options.bar.cornerStyle === 1 ? Appearance.sizes.hyprlandGapsOut : 0)
                 WlrLayershell.namespace: "quickshell:bar"
                 implicitHeight: Appearance.sizes.barHeight + Appearance.rounding.screenRounding
@@ -230,6 +243,7 @@ Scope {
 
         onPressed: {
             GlobalStates.barOpen = !GlobalStates.barOpen;
+            updateHyprlandAppearance(GlobalStates.barOpen)
         }
     }
 

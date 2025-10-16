@@ -1,0 +1,17 @@
+[general]
+home_row_keys=
+modes=floating
+cancellation_status_code=1
+
+[mode_floating]
+source=detect
+label_color=#$primary #
+label_select_color=#$primary #50
+unselectable_bg_color=#$surfaceContainerLowest #bb
+selectable_bg_color=#$surfaceContainerLowest #bb
+selectable_border_color=#$surfaceContainerLowest #bb
+label_font_family=MonoLisa Nerd Font Black
+label_font_size=13 100% 13
+label_symbols=asdghlqweyuipzxcvbnm
+[mode_click]
+button=left

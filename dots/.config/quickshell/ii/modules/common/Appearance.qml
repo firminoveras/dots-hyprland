@@ -213,15 +213,15 @@ Singleton {
             property string expressive: "Space Grotesk"
         }
         property QtObject pixelSize: QtObject {
-            property int smallest: 10
-            property int smaller: 12
-            property int smallie: 13
-            property int small: 15
-            property int normal: 16
-            property int large: 17
-            property int larger: 19
-            property int huge: 22
-            property int hugeass: 23
+            property int smallest: 8
+            property int smaller: 10
+            property int smallie: 11
+            property int small: 13
+            property int normal: 14
+            property int large: 15
+            property int larger: 17
+            property int huge: 20
+            property int hugeass: 21
             property int title: huge
         }
     }
@@ -344,7 +344,7 @@ Singleton {
     }
 
     sizes: QtObject {
-        property real baseBarHeight: 40
+        property real baseBarHeight: 32
         property real barHeight: Config.options.bar.cornerStyle === 1 ? 
             (baseBarHeight + root.sizes.hyprlandGapsOut * 2) : baseBarHeight
         property real barCenterSideModuleWidth: Config.options?.bar.verbose ? 360 : 140
