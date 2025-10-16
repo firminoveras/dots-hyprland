@@ -59,7 +59,7 @@ ContentPage {
     }
 
     ContentSection {
-        icon: "battery_android_full"
+        icon: "battery_full_alt"
         title: Translation.tr("Battery")
 
         ConfigRow {

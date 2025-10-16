@@ -1,0 +1,138 @@
+[[mgr.prepend_keymap]]
+desc = "Start bunny.yazi"
+on = "<Space>"
+run = "plugin bunny"
+
+[[mgr.prepend_keymap]]
+desc = "Start bunny.yazi fuzzy search"
+on = "'"
+run = "plugin bunny fuzzy"
+
+[[mgr.prepend_keymap]]
+on = "O"
+run = 'tab_create ~/'
+desc = "New Tab"
+
+[[mgr.prepend_keymap]]
+on = "o"
+run = 'tab_create --current'
+desc = "New Tab"
+
+[[mgr.prepend_keymap]]
+on = "<C-Enter>"
+run = 'open --interactive'
+desc = "Open interactive"
+
+[[mgr.prepend_keymap]]
+on = "<A-Enter>"
+run = 'shell "kitty -e nvim $0" --orphan'
+desc = "Open in other shell"
+
+[[mgr.prepend_keymap]]
+on = "<Enter>"
+run = 'open'
+desc = "Open"
+
+[[mgr.prepend_keymap]]
+on = "t"
+for = "unix"
+run = 'shell "$SHELL" --block'
+desc = "Open $SHELL here"
+
+[[mgr.prepend_keymap]]
+on = "T"
+for = "unix"
+run = 'shell --interactive'
+desc = "Open $SHELL here"
+
+[[mgr.prepend_keymap]]
+on = "y"
+run = [
+  'shell -- for path in "$@"; do echo "file://$path"; done | wl-copy -t text/uri-list',
+  "yank",
+]
+
+[[mgr.prepend_keymap]]
+desc = "Toggle selection"
+on = "<Tab>"
+run = "toggle"
+
+[[mgr.prepend_keymap]]
+desc = "File info"
+on = "i"
+run = "spot"
+
+[[mgr.prepend_keymap]]
+desc = "Cut"
+on = "m"
+run = "yank --cut"
+
+[[mgr.prepend_keymap]]
+desc = "Cut"
+on = "x"
+run = "yank --cut"
+
+[[mgr.prepend_keymap]]
+desc = "Close Tab"
+on = "q"
+run = "close"
+
+[[mgr.prepend_keymap]]
+desc = "To Tab 1"
+on = "<A-1>"
+run = "tab_switch 0"
+
+[[mgr.prepend_keymap]]
+desc = "To Tab 2"
+on = "<A-2>"
+run = "tab_switch 1"
+
+[[mgr.prepend_keymap]]
+desc = "To Tab 3"
+on = "<A-3>"
+run = "tab_switch 2"
+
+[[mgr.prepend_keymap]]
+desc = "To Tab 4"
+on = "<A-4>"
+run = "tab_switch 3"
+
+[[mgr.prepend_keymap]]
+desc = "To Tab 5"
+on = "<A-5>"
+run = "tab_switch 4"
+
+[[mgr.prepend_keymap]]
+desc = "To Tab 6"
+on = "<A-6>"
+run = "tab_switch 5"
+
+[[mgr.prepend_keymap]]
+desc = "To Tab 7"
+on = "<A-7>"
+run = "tab_switch 6"
+
+[[mgr.prepend_keymap]]
+desc = "To Tab 8"
+on = "<A-8>"
+run = "tab_switch 7"
+
+[[mgr.prepend_keymap]]
+desc = "To Tab 9"
+on = "<A-9>"
+run = "tab_switch 8"
+
+[[mgr.prepend_keymap]]
+desc = "To Tab 10"
+on = "<A-0>"
+run = "tab_switch 9"
+
+[[mgr.prepend_keymap]]
+desc = "Next Tab"
+on = "K"
+run = "tab_switch 1 --relative"
+
+[[mgr.prepend_keymap]]
+desc = "Previous Tab"
+on = "J"
+run = "tab_switch -1 --relative"

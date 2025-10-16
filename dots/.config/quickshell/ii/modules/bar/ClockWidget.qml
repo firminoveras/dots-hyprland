@@ -41,7 +41,6 @@ Item {
         id: mouseArea
         anchors.fill: parent
         hoverEnabled: true
-        acceptedButtons: Qt.NoButton
 
         ClockWidgetTooltip {
             hoverTarget: mouseArea

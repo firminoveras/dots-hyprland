@@ -15,13 +15,16 @@ MouseArea {
 
     hoverEnabled: true
 
-    onPressed: {
+    acceptedButtons: Qt.LeftButton | Qt.RightButton
+    onClicked: (mouse) => {
+      if (mouse.button == Qt.RightButton){
         Weather.getData();
         Quickshell.execDetached(["notify-send", 
             Translation.tr("Weather"), 
             Translation.tr("Refreshing (manually triggered)")
             , "-a", "Shell"
         ])
+      }
     }
 
     RowLayout {

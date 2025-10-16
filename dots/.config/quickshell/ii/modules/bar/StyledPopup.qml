@@ -13,7 +13,7 @@ LazyLoader {
     default property Item contentItem
     property real popupBackgroundMargin: 0
 
-    active: hoverTarget && hoverTarget.containsMouse
+    active: hoverTarget && hoverTarget.containsMouse && hoverTarget.pressedButtons & Qt.LeftButton 
 
     component: PanelWindow {
         id: popupWindow
