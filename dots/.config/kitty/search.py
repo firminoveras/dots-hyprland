@@ -11,13 +11,8 @@ from subprocess import PIPE, run
 from kittens.tui.handler import Handler
 from kittens.tui.line_edit import LineEdit
 from kittens.tui.loop import Loop
-from kittens.tui.operations import (
-    clear_screen,
-    cursor,
-    set_line_wrapping,
-    set_window_title,
-    styled,
-)
+from kittens.tui.operations import (clear_screen, cursor, set_line_wrapping,
+                                    set_window_title, styled)
 from kitty.config import cached_values_for
 from kitty.key_encoding import EventType
 from kitty.typing_compat import KeyEventType, ScreenSize

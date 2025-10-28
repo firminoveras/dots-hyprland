@@ -1,6 +1,46 @@
 [config]
 version_check = false
 
+[templates.yazi]
+input_path = '~/.config/matugen/templates/yazi/theme.toml'
+output_path = '~/.config/yazi/theme.toml'
+
+[templates.wl_kbptr]
+input_path = '~/.config/matugen/templates/wl-kbptr/config'
+output_path = '~/.config/wl-kbptr/config'
+
+[templates.surfingkeys]
+input_path = '~/.config/matugen/templates/surfingkeys/surfingkeys.js'
+output_path = '~/.config/surfingkeys/surfingkeys.js'
+
+[templates.sddm]
+input_path = '~/.config/matugen/templates/sddm/theme.conf'
+output_path = '/usr/share/sddm/themes/sdt/theme.conf'
+
+[templates.neovim]
+input_path = '~/.config/matugen/templates/neovim/colors.lua'
+output_path = '~/.config/nvim/lua/plugins/colors.lua'
+
+[templates.kando]
+input_path = '~/.config/matugen/templates/kando/config.json'
+output_path = '~/.config/kando/config.json'
+
+[templates.nchat_color]
+input_path = '~/.config/matugen/templates/nchat/color.conf'
+output_path = '~/.config/nchat/color.conf'
+
+[templates.nchat_usercolor]
+input_path = '~/.config/matugen/templates/nchat/usercolor.conf'
+output_path = '~/.config/nchat/usercolor.conf'
+
+[templates.kitty]
+input_path = '~/.config/matugen/templates/kitty/colors.conf'
+output_path = '~/.config/kitty/colors.conf'
+
+[templates.flameshot]
+input_path = '~/.config/matugen/templates/flameshot/flameshot.ini'
+output_path = '~/.config/flameshot/flameshot.ini'
+
 [templates.m3colors]
 input_path = '~/.config/matugen/templates/colors.json'
 output_path = '~/.local/state/quickshell/user/generated/colors.json'
@@ -32,3 +72,4 @@ output_path = '~/.local/state/quickshell/user/generated/color.txt'
 [templates.wallpaper]
 input_path = '~/.config/matugen/templates/wallpaper.txt'
 output_path = '~/.local/state/quickshell/user/generated/wallpaper/path.txt'
+
