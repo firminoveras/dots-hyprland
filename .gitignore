@@ -15,3 +15,25 @@ __pycache__/
 
 # Emacs auto backup file
 *~
+
+# dots personal
+dots/.config/fish/completions
+dots/.config/fish/conf.d
+dots/.config/fish/functions
+dots/.config/fish/fish_variables
+
+dots/.config/nchat/emojis/
+dots/.config/nchat/history/
+dots/.config/nchat/profiles/
+dots/.config/nchat/log*
+
+dots/.config/nchat/color.conf
+dots/.config/nchat/usercolor.conf
+dots/.config/hypr/hyprland/colors.conf
+dots/.config/hypr/hyprlock/colors.conf
+dots/.config/yazi/theme.toml
+dots/.config/kitty/colors.conf
+dots/.config/fuzzel/fuzzel_theme.ini
+dots/.config/nvim/lua/plugins/colors.lua
+dots/.config/fish/colors.txt
+dots/.config/kdeglobals
