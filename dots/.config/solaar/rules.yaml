@@ -1,0 +1,13 @@
+%YAML 1.3
+---
+- Key: [Middle Button, pressed]
+- Execute: [hyprctl, dispatch, global, ':main']
+...
+---
+- Key: [Forward Button, pressed]
+- Execute: [hyprctl, dispatcher, workspace, r-1]
+...
+---
+- Key: [Back Button, pressed]
+- Execute: [hyprctl, dispatcher, workspace, r+1]
+...

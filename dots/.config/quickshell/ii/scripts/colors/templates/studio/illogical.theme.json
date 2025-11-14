@@ -1,0 +1,137 @@
+{
+  "name": "Illogical Theme",
+  "dark": true,
+  "author": "Firmino Veras",
+  "ui": {
+    "*": {
+      "background": "#$surface #", 
+      "foreground": "#$onBackground #",
+      "borderColor": "#$surfaceContainer #",
+
+      "lightSelectionBackground": "#$surfaceContainerLow #",
+      "inactiveBackground": "#$surfaceContainerLow #",
+
+      "selectionInactiveBackground": "#$surfaceContainerHighest #",
+      "selectionInactiveForeground": "#$onSurface #",
+      "selectionBackground": "#$primary #",
+      "selectionForeground": "#$onPrimary #",
+
+      "hoverBackground": "#$surfaceContainerHigh #",
+      "hoverBorderColor": "#$surfaceContainerHighest #",
+      "pressedBackground": "#$secondaryContainer #"
+    },
+
+    "Editor": {
+      "background": "#$background #"
+    },
+
+    "Panel": {
+      "background": "#$surface #",
+      "captionBackground": "#$surfaceContainer #",
+      "captionForeground": "#$onSurface #"
+    },
+
+    "MainToolbar": {
+      "background": "#$surface #",
+      "inactiveBackground": "#$surface #"
+    },
+
+    "ToolWindow": {
+      "background": "#$surface #", 
+      "header.background": "#$surface #",
+      "header.active.background": "#$surface #",
+      "header.tab.selected.background": "#$surfaceContainer #",
+      "header.tab.selected.active.background": "#$surfaceContainer #",
+      "headerBackground": "#$surface #",
+      "headerBorderColor": "#$outline #"
+    },
+
+    "EditorTabs": {
+      "background": "#$surface #",
+      "underlinedTabBackground": "#$background #", 
+      "hoverBackground": "#$surfaceContainer #",
+      "underlineColor": "#$primary #",
+      "inactive.maskColor": "#$surface #"
+    },
+
+    "FileColor": {
+      "Blue": "#$surfaceContainer #",
+      "Green": "#$term2 #",
+      "Orange": "#$term3 #",
+      "Rose": "#$term1 #",
+      "Violet": "#$term5 #",
+      "Yellow": "#$term3 #"
+    },
+
+    "ValidationTooltip": {
+      "errorBackground": "#$errorContainer #",
+      "errorBorderColor": "#$error #",
+      "warningBackground": "#$surfaceContainer #",
+      "warningBorderColor": "#$term3 #"
+    },
+
+    "Button": {
+      "foreground": "#$onSurface #",          
+      "startBackground": "#$surfaceContainerHighest #",
+      "endBackground": "#$surfaceContainerHighest #",
+      "startBorderColor": "#$surfaceContainerHighest #",
+      "endBorderColor": "#$surfaceContainerHighest #",
+        
+      "default.foreground": "#$onPrimary #",
+      "default.startBackground": "#$primary #",
+      "default.endBackground": "#$primary #",      
+      "default.startBorderColor": "#$primary #",
+      "default.endBorderColor": "#$primary #",
+
+      "focusColor": "#$primary #",
+      "default.focusColor": "#$tertiary #",
+      "focusWidth": 1,
+      "focusedBorderColor": "#00000000", 
+      "default.focusedBorderColor": "#00000000",
+
+      "paintShadow": false,
+      "shadowColor": "#00000000",
+      "arc": 22
+    },
+
+    "ProgressBar": {
+      "foreground": "#$primary #",
+      "trackColor": "#$surfaceContainer #"
+    },
+
+    "StatusBar": {
+      "background": "#$surface #",
+      "borderColor": "#$surface #",
+      "foreground": "#$term8 #"
+    },
+    
+    "Component": {
+      "focusColor": "#$primary #",
+      "borderColor": "#$surfaceContainer #"
+    },
+
+    "Popup": {
+        "background": "#$surfaceContainer #",
+        "borderColor": "#$surface #"
+    },
+
+    "SearchEverywhere": {
+        "background": "#$surfaceContainer #",
+        "foreground": "#$onBackground #"
+    },
+    
+    "Borders": {
+      "color": "#$surface #", 
+      "ContrastBorderColor": "#$surface #"
+    }
+  },
+  
+  "icons": {
+    "ColorPalette": {
+      "Checkbox.Background.Default.Dark": "#$surfaceContainer #",
+      "Checkbox.Background.Selected.Dark": "#$primary #",
+      "Checkbox.Border.Default.Dark": "#$term8 #",
+      "Checkbox.Foreground.Selected.Dark": "#$onPrimary #"
+    }
+  }
+}
