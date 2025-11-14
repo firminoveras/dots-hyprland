@@ -174,7 +174,7 @@ if [[ ! "${SKIP_BACKUP}" == true ]]; then auto_backup_configs; fi
 
 case "${EXPERIMENTAL_FILES_SCRIPT}" in
   true)source sdata/subcmd-install/3.files-exp.sh;;
-  *)source sdata/subcmd-install/3.files-legacy.sh;;
+  *)source sdata/subcmd-install/3.files-link.sh;;
 esac
 
 if [[ ! "$OS_GROUP_ID" == "fedora" ]]; then

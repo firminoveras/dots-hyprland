@@ -1,0 +1,11 @@
+<idea-plugin>
+  <id>com.illogical.dynamic.theme</id>
+  <name>Illogical Dynamic Theme</name>
+  <version>1.0</version>
+  <vendor>Firmino Veras</vendor>
+  <description>Tema dinâmico gerado via script</description>
+  <depends>com.intellij.modules.platform</depends>
+  <extensions defaultExtensionNs="com.intellij">
+    <themeProvider id="illogical.theme" path="/illogical.theme.json"/>
+  </extensions>
+</idea-plugin>

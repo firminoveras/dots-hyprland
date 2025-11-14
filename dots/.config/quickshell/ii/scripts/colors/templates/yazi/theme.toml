@@ -1,0 +1,132 @@
+[mgr]
+cwd = { fg = "#$primary #", italic = true }
+
+# Hovered
+hovered = { bg = "#$primary #", fg = "#$onPrimary #" }
+preview_hovered = { bold = false }
+
+# Find
+find_keyword = { fg = "#$inversePrimary #", reversed = true }
+find_position = { fg = "#$surfaceContainerHighest #", bold = true, italic = true }
+
+# Marker
+marker_selected = { fg = "#$outline #", bg = "#$outline #" }
+marker_copied = { fg = "#$tertiaryContainer #", bg = "#$tertiaryContainer #" }
+marker_cut = { fg = "#$errorContainer #", bg = "#$errorContainer #" }
+marker_marked = { fg = "#$outlineVariant #", bg = "#$outlineVariant #" }
+
+# Count
+count_copied = { fg = "#$secondaryContainer #", bold = true, reversed = true }
+count_cut = { fg = "#$errorContainer #", bold = true, reversed = true }
+count_selected = { fg = "#$outline #", bold = true, reversed = true }
+
+# Border
+border_symbol = "│"
+border_style = { fg = "#$outline #" }
+
+[tabs]
+inactive = { fg = "#$onSurface #", bg = "#$surfaceContainerHigh #", bold = true }
+active = { fg = "#$surfaceVariant #", bg = "#$secondary #" }
+sep_inner = { open = "", close = "" }
+sep_outer = { open = "", close = "" }
+
+[mode]
+# Normal mode
+normal_main = { fg = "#$surfaceVariant #", bg = "#$secondary #" }
+normal_alt = { fg = "#$onSurface #", bg = "#$surfaceContainerHigh #", bold = true }
+
+# Select mode
+select_main = { fg = "#$surfaceVariant #", bg = "#$tertiary #" }
+select_alt = { fg = "#$onSurface #", bg = "#$surfaceContainerHigh #", bold = true }
+
+# Unset mode
+unset_main = { fg = "#$surfaceVariant #", bg = "#$primary #", bold = true }
+unset_alt = { fg = "#$primary #", bg = "#$primary #" }
+
+[status]
+overall = { fg = "#$onSurface #" }
+
+# Permissions
+perm_type = { fg = "#$outline #" }
+perm_read = { fg = "#$secondary #" }
+perm_write = { fg = "#$tertiary #" }
+perm_exec = { fg = "#$primary #" }
+perm_sep = { fg = "#$outline #" }
+
+# Progress
+progress_label = { fg = "#$background #" }
+progress_normal = { fg = "#$secondary #", bg = "#$onSecondary #" }
+progress_error = { bg = "#$errorContainer #" }
+
+[which]
+cols = 3
+mask = { bg = "#$surfaceContainerLow #" }
+cand = { fg = "#$primary #" }
+rest = { fg = "#$tertiary #" }
+desc = { fg = "#$onSurface #", bold = true }
+separator = " "
+separator_style = {}
+
+[confirm]
+border = { fg = "#$outline #" }
+title = { fg = "#$primary #", bold = true }
+content = { fg = "#$onPrimary #", bold = true }
+list = { fg = "#$onSurface #" }
+btn_no = { fg = "#$onSurface #", bg = "#$surfaceContainerHigh #", bold = true }
+btn_yes = { fg = "#$surfaceVariant #", bg = "#$secondary #" }
+
+[spot]
+border = { fg = "#$outline #" }
+title = { fg = "#$primary #", bold = true }
+tbl_col = { fg = "#$surfaceVariant #" }
+tbl_cell = { bg = "#$primary #" }
+
+[notify]
+title_info = { fg = "#$errorContainer #" }
+title_warn = { fg = "#$secondaryContainer #" }
+title_error = { fg = "#$errorContainer #" }
+
+[pick]
+border = { fg = "#$outline #", bold = true }
+active = { fg = "#$primary #" }
+inactive = { fg = "#$surfaceVariant #" }
+
+[input]
+border = { fg = "#$outline #" }
+title = { fg = "#$primary #", bold = true }
+value = { fg = "#$onSurface #" }
+selected = { bg = "#$primary #" }
+
+[cmp]
+border = { fg = "#$outline #", bold = true }
+active = { fg = "#$primary #", bg = "#$primary #" }
+inactive = { fg = "#$surfaceVariant #" }
+
+[tasks]
+border = { fg = "#$surfaceContainerHigh #" }
+title = { fg = "#$surfaceContainerHighest #", bold = true }
+hovered = { bg = "#$primary #" }
+
+[help]
+on = { fg = "#$errorContainer #" }
+run = { fg = "#$primary #" }
+desc = { fg = "#$surfaceContainerHighest #", italic = true }
+hovered = { bg = "#$primary #" }
+footer = { fg = "#$onSurface #", bg = "#$secondary #", bold = true }
+
+[filetype]
+rules = [
+  { mime = "image/*", fg = "#$errorContainer #" },
+  { mime = "video/*", fg = "#$secondaryContainer #" },
+  { mime = "audio/*", fg = "#$tertiaryContainer #" },
+  { name = "*", is = "orphan", fg = "#$surfaceContainerHighest #", crossed = true },
+  { name = "*/", is = "orphan", fg = "#$surfaceContainerHighest #", crossed = true },
+  { name = "*", is = "link", fg = "#$secondaryFixed #" },
+  { name = "*/", is = "link", fg = "#$secondaryFixed #" },
+  { name = "*", is = "exec", fg = "#$primary #" },
+  { mime = "inode/empty", fg = "#$surfaceContainerHighest #" },
+  { name = "*/", is = "hidden", fg = "#$onSurface #", italic = true },
+  { name = "*", is = "hidden", fg = "#$outline #", italic = true },
+  { name = "*/", fg = "#$onSurface #" },
+  { name = "*", fg = "#$outline #" },
+]
