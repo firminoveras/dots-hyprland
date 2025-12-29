@@ -70,3 +70,39 @@ else
 fi
 
 # apply_qt & # Qt theming is already handled by kde-material-colors
+
+apply_color() {
+  local app_name="$1"
+  local file_name="$2"
+  local target_path="$3"
+
+  local template_file="$SCRIPT_DIR/templates/$app_name/$file_name"
+  local generated_dir="$STATE_DIR/user/generated/colors/$app_name"
+  local generated_file="$generated_dir/$file_name"
+
+  [ ! -f "$template_file" ] && return
+
+  mkdir -p "$generated_dir"
+  cp "$template_file" "$generated_file"
+
+  for i in "${!colorlist[@]}"; do
+    sed -i "s/${colorlist[$i]} #/${colorvalues[$i]#\#}/g" "$generated_file"
+  done
+
+  WALLPAPER_PATH=$(cat "$STATE_DIR"/user/generated/wallpaper/path.txt | tr -d '\n')
+  sed -i 's\#$image #\'"$WALLPAPER_PATH"'\g' "$generated_file"
+
+  mkdir -p "$(dirname "$target_path")"
+  cp "$generated_file" "$target_path"
+}
+
+apply_color "flameshot" "flameshot.ini" "$XDG_CONFIG_HOME/flameshot/flameshot.ini" &
+apply_color "kando" "config.json" "$XDG_CONFIG_HOME/kando/config.json" &
+apply_color "kitty" "colors.conf" "$XDG_CONFIG_HOME/kitty/colors.conf" &
+apply_color "nchat" "color.conf" "$XDG_CONFIG_HOME/nchat/color.conf" &
+apply_color "nchat" "usercolor.conf" "$XDG_CONFIG_HOME/nchat/usercolor.conf" &
+apply_color "neovim" "colors.lua" "$XDG_CONFIG_HOME/nvim/lua/plugins/colors.lua" &
+apply_color "sddm" "theme.conf" "/usr/share/sddm/themes/sddm-astronaut-theme/Themes/theme.conf" &
+apply_color "surfingkeys" "surfingkeys.js" "$XDG_CONFIG_HOME/surfingkeys/surfingkeys.js" &
+apply_color "wl-kbptr" "config" "$XDG_CONFIG_HOME/wl-kbptr/config" &
+apply_color "yazi" "theme.toml" "$XDG_CONFIG_HOME/yazi/theme.toml" &
