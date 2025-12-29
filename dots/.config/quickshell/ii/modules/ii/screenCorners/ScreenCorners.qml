@@ -79,6 +79,7 @@ Scope {
                     implicitWidth: Config.options.sidebar.cornerOpen.cornerRegionWidth
                     implicitHeight: Config.options.sidebar.cornerOpen.cornerRegionHeight
                     hoverEnabled: true
+                    acceptedButtons: Qt.LeftButton | Qt.RightButton
                     onPositionChanged: {
                         if (!Config.options.sidebar.cornerOpen.clicklessCornerEnd) return;
                         const verticalOffset = Config.options.sidebar.cornerOpen.clicklessCornerVerticalOffset;
@@ -91,8 +92,11 @@ Scope {
                         if (Config.options.sidebar.cornerOpen.clickless)
                             screenCorners.actionForCorner[cornerPanelWindow.corner]();
                     }
-                    onPressed: {
-                        screenCorners.actionForCorner[cornerPanelWindow.corner]();
+                    onPressed: event => {
+                        if (event.button === Qt.LeftButton)
+                            screenCorners.actionForCorner[cornerPanelWindow.corner]();
+                        else
+                            Quickshell.execDetached(["bash", "-c", "${XDG_CONFIG_HOME:-$HOME/.config}/hypr/hyprland/scripts/focus-mode-toggle.sh"]);
                     }
                     onScrollDown: {
                         if (!Config.options.sidebar.cornerOpen.valueScroll)

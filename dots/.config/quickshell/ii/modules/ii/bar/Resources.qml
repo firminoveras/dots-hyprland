@@ -26,6 +26,13 @@ MouseArea {
         }
 
         Resource {
+            iconName: "thermometer"
+            percentage: ResourceUsage.pchPercentage
+            warningThreshold: 70
+            Layout.leftMargin: shown ? 6 : 0
+        }
+
+        Resource {
             iconName: "swap_horiz"
             percentage: ResourceUsage.swapUsedPercentage
             shown: (Config.options.bar.resources.alwaysShowSwap && percentage > 0) || 

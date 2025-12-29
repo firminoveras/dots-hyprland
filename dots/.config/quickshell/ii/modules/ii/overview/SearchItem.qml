@@ -50,8 +50,8 @@ RippleButton {
     colBackgroundHover: Appearance.colors.colPrimaryContainer
     colRipple: Appearance.colors.colPrimaryContainerActive
 
-    property string highlightPrefix: `<u><font color="${Appearance.colors.colPrimary}">`
-    property string highlightSuffix: `</font></u>`
+    property string highlightPrefix: `<b><font color="${Appearance.colors.colPrimary}">`
+    property string highlightSuffix: `</font></b>`
     function highlightContent(content, query) {
         if (!query || query.length === 0 || content == query || fontType === "monospace")
             return StringUtils.escapeHtml(content);
